@@ -3,6 +3,7 @@
 ![git:gihub](Git 1일차 정리.assets/git:gihub-7208300.png)
 
 - **😸git 이란 무엇인가?**
+  
   -  Git은 2005년 리눅스를발명한 리눅스 토르발스가 개발했다.
   - Git은 `분산버전관리 시스템`이다. (**버전: 컴퓨터 소프트웨어의 특정 상태** )
   - Terminal을 통해서 Git을 사용하는데 Terminal 같은 환경을 *CLI(Comman line interface)*라고 한다.
@@ -29,12 +30,13 @@
   
   - git status: 폴더에서 일어나는 모든 일들을 추척한다. 파일의 상태를 확인하고 커밋 안 된 파일을 체크할 때 사용
   
+  - git add < file >: working directory 상의 변경 내용을 staging area에 추가하기 위해 사용
+  
   - git commit -m "커밋 메시지": **커밋 메시지를 통해 내가 무슨 작업을 했는지 기록하는 행위 or 나중에 버전을 되돌아가고 싶을 때 그 버전을 명확하게 되돌아 가고 싶을 때 **
   
-  - git add < file >: working directory 상의 변경 내용을 staging area에 추가하기 위해 사용
     - Untrackted 상태의 파일을 staged로 변경 
     - Modified 상태의 파일을 staged로 변경
-    
+  
   - git log: 현재 저장소에 기록된 커밋(버전)을 조회
     - git log --1: 직전 커밋을 불러온다.
     - git log --oneline: 한 줄로 나타내준다.
