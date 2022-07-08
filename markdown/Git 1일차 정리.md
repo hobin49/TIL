@@ -1,6 +1,6 @@
 ## 1일차 정리
 
-![git:gihub](Git 1일차 정리.assets/git:gihub-7208300.png)
+![git:gihub](https://media.vlpt.us/images/yeeed711/post/d4c38b37-a2aa-4fff-9ac6-63a57a8e0424/git.png)
 
 - **😸git 이란 무엇인가?**
   
