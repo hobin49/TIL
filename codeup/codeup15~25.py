@@ -48,4 +48,7 @@ w1, w2 = input().split()
 s = w1 + w2
 print(s)
 
-# 코드업 
+# 코드업 6025
+a, b = input().split()
+c = int(a) + int(b)
+print(c)
