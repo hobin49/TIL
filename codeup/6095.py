@@ -13,3 +13,6 @@ for i in range(1, 20) :
   for j in range(1, 20) : #for 중첩문을 돌고
     print(d[i][j], end=' ') #공백을 두고 한 줄로 출력하고
   print() # 줄바꿈을 해준다.
+
+
+#checkerboard=[[0]*19 for _ in range(19)]
