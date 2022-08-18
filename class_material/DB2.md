@@ -78,6 +78,18 @@ SELECT last_name, first_name, balance FROM users ORDER BY balance DESC LIMIT 10;
 
 -- 계좌 잔액 내림차순(높은 -> 낮은것), 성 오름차순
 SELECT last_name, first_name, balance FROM users ORDER BY balance DESC, last_name ASC LIMIT 10;
+
+-- 음주를 하는 사람의 허리 둘레를 높은 순으로 5명 출력하시오.
+SELECT id, waist FROM healthcare WHERE is_drinking = 1 AND waist <> '' ORDER BY waist DESC LIMIT 5;
+
+-- BMI가 30이상인 사람의 수를 출력하시오.
+SELECT COUNT(*) FROM healthcare WHERE weight/((height * 0.01) * (height * 0.01)) >= 30;
+
+-- AS 사용
+SELECT id, height, weight AS 몸무게, weight /((height*0.01) * (height * 0.01)) AS BMI FROM healthcare WHERE BMI >= 30
+LIMIT 3;
+
+
 ```
 
 - WHERE 절에서 사용할 수 있는 연산자
