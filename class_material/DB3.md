@@ -4,6 +4,7 @@
   - SUBSTR(문자열, start, length): 문자열 자르기
     - 시작 인덱스는 1, 마지막 인덱스는 -1
   - TRIM(문자열), LTRIM(문자열), RTRIM(문자열): 문자열 공백 제거
+    - Trim(문자열, 문자), rtrim(문자열, 문자), trim(문자열, 문자)
   - LENGTH(문자열): 문자열 길이
   - REPLACE(문자열, 패턴, 변경값): 패턴에 일치하는 부분을 변경
   - UPPER(문자열), LOWER(문자열): 대소문자 변경
@@ -23,11 +24,11 @@ SELECT LENGTH(first_name), first_name FROM USERS LIMIT 5;
 -- 문자열 변경 REPLACE
 SELECT first_name, phone, REPLACE(phone, "-", "") FROM users LIMIT 5;
 
--- 숫자 활용
+-- 숫자 활용 mod는 나머지를 출력
 SELECT MOD(5, 2) FROM users LIMIT 1;
 
 -- 올림, 내림, 반올림
-SELECT CEIL(3.14), FLOOR(3.14), ROUND(3.14) FROM users LIMIT 1;
+SELECT CEIL(3.14), FLOOR(3.14), ROUND(3.14), 2) FROM users LIMIT 1;
 
 -- 제곱근
 SELECT SQRT(9) FROM users LIMIT 1:
