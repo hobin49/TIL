@@ -189,3 +189,13 @@ Error: Cannot add a NOT NULL COLUMN with default value NULL-
   ```sql
   ALTER TABLE news ADD COLUMN subtitle TEXT NOT NULL DEFAULT '소제목';
 
+```sql
+-- 3개 테이블 join
+SELECT *
+FROM articles
+		JOIN users
+				ON articles.user_id = users.id
+		JOIN role
+				ON users.role_id = role_id;
+```
+
