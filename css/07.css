@@ -1,0 +1,61 @@
+.stupid{
+  font-size: 20px;
+  color:aquamarine;
+  margin:10px 20px 30px 40px;
+  border: 1px dashed black;
+}
+
+.size{
+  font-size: 36px;
+}
+
+.em {
+  font-size: 2em;
+}
+
+.rem{
+  font-size: 2rem;
+}
+h1{
+  color:black;
+  background-color: rgb(0, 255, 0);
+}
+
+.px{
+  width:200px
+}
+.vw{
+  width:50vw;
+}
+
+.p{
+  color:red;
+  border: 3px solid black;
+}
+
+.box1{
+  border: 1px solid blue;
+  margin: 10px auto;
+  padding: 20px;
+  width:300px;
+  text-align: center;
+}
+
+.box2{
+  width:500px;
+  border-width: 4px;
+  border-style: groove;
+  border-color: yellow;
+  padding: 10px 20px;
+  text-align: center;
+  margin: 10px auto;
+  background-color: pink;
+  box-sizing: border-box;
+}
+
+.block{
+  display: block;
+  font-size: 2rem;
+  height: 100px;
+  width:100px;
+}

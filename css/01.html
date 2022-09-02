@@ -6,24 +6,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
-    .box{
-      width: 100px;
-      margin: 10px auto;
-      padding: 20px;
-      border: 1px solid black;
-      color: white;
-      text-align: center;
-      background-color: blueviolet;
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      height: 300px;
+      justify-content: space-around;
+      align-content: space-around;
     }
 
-    .box-sizing{
-      box-sizing: border-box;
-      margin-top: 50px;
+    .box {
+      width: 400px;
+      height: 100px;
+      text-align: center;
+      background: #ffc93c
     }
+
+
   </style>
 </head>
-<body>
-  <div class="box">center-box</div>
-  <div class="box box-sizing">border-box</div>
+<body class="container">
+  <div class="box">1</div>
+  <div class="box">2</div>
+  <div class="box">3</div>
+  <div class="box">4</div>
+  <div class="box">5</div>
+  <div class="box">6</div>
 </body>
 </html>
