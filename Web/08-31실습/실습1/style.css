@@ -1,0 +1,113 @@
+.small{
+  font-size: 12px;
+  text-align: center;
+  margin-bottom: 5px;
+}
+.big{
+  text-align: center;
+  margin-top: 1px;
+}
+.all-card{
+  width: 1200px;
+  margin:0 auto;
+}
+.card{
+  width:300px;
+  padding: 10px;
+  margin-right: 2px;
+  text-align: center;
+  display: inline-block;
+  
+}
+.card-image {
+  width: 100%;
+  border-radius: 1rem;
+}
+.card-image2{
+  width: 100%;
+  height: 300px;
+  border-radius: 1rem;
+}
+.small-letter {
+  text-align: left;
+  font-size: 7px;
+  margin-bottom: 5px; 
+}
+.big-letter{
+  text-align: left;
+  margin-top: 5px;
+  margin-bottom: 13px;
+}
+
+.big-letter1{
+  text-align: left;
+  margin-top: 25px;
+  margin-bottom: 13px;
+}
+.small-letter2 {
+  text-align: left;
+  font-size: 7px;
+  margin-top: 5px; 
+}
+.small-letter3{
+  text-align: left;
+  font-size: 7px;
+  margin-top: 5px;
+}
+
+.small-letter4{
+  text-align: left;
+  font-size: 7px;
+  margin-top: 5px;
+}
+
+.container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+} 
+
+.title{
+  text-align: center;
+}
+
+.subtext{
+  display: block;
+  font-size: 16px;
+}
+
+
+.picture{
+  width: 1200px; 
+  margin: 0 auto;
+}
+.image{
+  width:300px;
+  padding: 10px;
+  text-align: center;
+  margin-right: 2px;
+  border-radius: 1rem;
+  display: inline-block;
+}
+.first{
+  font-size: 10px;
+  color: gray;
+  text-align: left;
+}
+.middle{
+  font-size: 15px;
+  text-align: left;
+  margin-top: 2px;
+  margin-bottom: 1px;
+}
+.third{
+  font-size: 16;
+  text-align: left;
+  margin-top: 3px;
+  margin-bottom: 2px;
+}
+.last{
+  font-size: 13px;
+  text-align: left;
+  margin-top: 3px;
+}

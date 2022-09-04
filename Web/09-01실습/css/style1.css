@@ -1,0 +1,203 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  min-width: 1280px;
+  color: #333333;
+  position: relative;
+  text-align: center;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+h2 {
+  font-size: 30px;
+}
+
+
+/* Nav */
+.nav {
+  display: flex;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 9;
+  padding: 30px 50px;
+  background-color: #fff;
+  text-transform: uppercase;
+}
+
+.nav__logo {
+  opacity: 0.8;
+}
+
+.nav__list {
+  display: flex;
+}
+
+.nav__list__link {
+  margin-left: 20px;
+}
+
+.nav__list__link a:hover {
+  color: #2097F3;
+  transition: all ease-in-out .5s;
+}
+
+
+/* Banner */
+.banner {
+  background-image: url(../assets/apparel.jpeg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 700px;
+}
+
+
+/* Main-index */
+.main-index {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 1280px;
+  margin: 0 auto;
+}
+
+.about {
+  display: flex;
+  margin: 50px 0;
+}
+
+.about__img {
+  width: 500px;
+  border-radius: 20px;
+  margin-right: 30px;
+}
+
+.about__content p {
+  margin-top: 20px;
+  line-height: 30px;
+  text-align: left;
+}
+
+.more {
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.more__title {
+  margin-bottom: 50px;
+}
+
+.more__list {
+  display: flex;
+  justify-content: space-around;
+  height: 120px;
+}
+
+.more__list__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.more__list__item img {
+  width: 64px;
+  height: 64px;
+}
+
+
+/* Top-btn */
+.top-btn {
+  position: absolute;
+  bottom: 50px;
+  right: 50px;
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.top-btn:hover {
+  opacity: 1;
+  transition: 2s;
+}
+
+.top-btn img {
+  width: 50px;
+  height: 50px;
+}
+
+
+/* Main-product */
+.main-product {
+  width: 1280px;
+  margin: 20px auto;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border: 2px solid #000;
+  padding: 10px;
+}
+
+.card:hover .card__bg {
+  opacity: .8;
+  visibility: visible;
+}
+
+.card:hover .card__bg__text {
+  opacity: 1;
+  visibility: visible;
+}
+
+.card__title {
+  margin: 10px 0;
+  font-size: 20px;
+}
+
+.card__text {
+  text-align: left;
+  line-height: 1.5;
+}
+
+.card__bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  opacity: 0.9;
+}
+
+.card__bg__text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 22px;
+}
+
+.card__bg,
+.card__bg__text {
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s, opacity .5s linear;
+}
