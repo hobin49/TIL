@@ -8,37 +8,19 @@ body {
 }
 
 .nav {
-  padding: 1rem;
-  top: 0;
   height: 3rem;
-  position: sticky;
-  display: flex;
   font-size: 1.2rem;
-  background-color: white;
-  justify-content: space-between;
-  align-items: center;
   z-index: 1;
-}
-
-.log {
   padding: 1rem;
 }
 
-.log__link {
-  text-decoration: none;
-  color: black;
-}
-
-.tab__list {
-  display: flex;
+.log{
+  padding: 1rem;
 }
 
 .tab__link {
-  margin: 1rem;
-  padding: 1rem;
-  border-radius: 2rem;
-  text-decoration: none;
-  color: black;
+  margin:1rem;
+  padding:1rem;
 }
 
 .tab__link:hover {
