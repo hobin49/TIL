@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+</head>
+<body>
+  <!--nav-->
+  <nav class="navbar navbar-expand-lg bg-light">
+    <div class="container px-4">
+      <a class="navbar-brand" href="#">Start Bootstrap</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              shop
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+        </ul>
+        <form class="d-flex">
+          <button type="button" class="btn btn-outline-dark"><i class="bi bi-cart-fill p-1"></i>Cart
+          <span class="badge bg-dark text-white rounded-4 ms-1">0</span>
+        </svg>
+        </button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <!--content-->
+  <section class="py-5">
+  <div class="container px-4 my-5">
+    <div class="row gx-4 align-items-center">
+      <div class="col-md-6 d-flex justify-content-center" >
+        <img class="img-fluid" src="./images/청소기.jpeg" alt="">
+      </div>
+      <div class="col-md-6">
+      <div> SKU: BST-498s </div>
+      <h1 class="text-black display-5 fw-bold">Shop item templete</h1>
+      <div class="mb-5"><s>$45.00</s>$40.00</div>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium at dolorem quidem modi. Nam sequi consequatur obcaecati excepturi alias magni, accusamus eius blanditiis delectus ipsam minima ea iste laborum vero?</p>
+      <div class="d-flex">
+        <input class="form-control text-center me-3" id="now" type="num" value="1" style="width:3rem">
+      <button type="button" class="btn btn-outline-dark"><i class="bi bi-cart-fill p-1"></i>Add to Cart
+      </div>  
+    </div>
+  </div> 
+</div>
+  </div>
+</section>
+
+<!--card section-->
+<section class="py-5 bg-light">
+  <div class="container px-4 px-lg-5 mt-5">
+    <h2 class="fw-bolder mb-4">Related products</h2>
+    <div class="row row-cols-12 row-cols-2 row-cols-md-4 row-cols-xl-3 gx-4 justify-content-center">
+      <div class="col mb-5">
+        <div class="card h-100">
+          <img src="./images/아이패드.jpeg" class="card-img-top" alt="...">
+          <div class="card-body text-center p-4">
+            <div class="text-center">
+            <h5 class="card-title text-cemter">Fancy Product</h5> $40.00 - $80.00
+            </div>
+          </div>
+          <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+            <div class="text-center">
+            <a class="btn btn-outline-dark mt-auto" href="#">View options</a>
+            </div>
+          </div>  
+        </div>
+      </div>
+      <div class="col mb-5">
+        <div class="card h-100">
+          <div class="badge bg-black rounded-1 position-absolute text-center" style="top: 0.5rem; right:0.5rem">Sale</div>
+          <img src="./images/맥북.jpeg" class="card-img-top" alt="...">
+          <div class="card-body text-center p-4">
+            <div class="text-center">
+            <h5 class="card-title text-cemter">Special</h5><div class="d-flex justify-content-center text-warning mb-1">
+              <div class="bi-star-fill"></div>
+              <div class="bi-star-fill"></div>
+              <div class="bi-star-fill"></div>
+              <div class="bi-star-fill"></div>
+              <div class="bi-star-fill"></div></div> <s>$20.00</s> $18.00
+            </div>
+          </div>
+          <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+            <div class="text-center">
+            <a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a>
+            </div>
+          </div>  
+        </div>
+      </div>
+      <div class="col mb-5">
+        <div class="card h-100">
+          <div class="badge bg-black rounded-1 position-absolute text-center" style="top: 0.5rem; right:0.5rem">Sale</div>
+          <div style="width:390px; height: 390px; position:relative; overflow: hidden;">
+           <!--object-position: 0% 100%;--> <!--position:relative; overflow: hidden; position:absolute; transform: translate(0%, -20%);-->
+          <img src="./images/휴대폰.jpeg" class="card-img-top" style="position:absolute; transform: translate(0%, -20%);" alt="...">
+          </div>
+          <div class="card-body text-center p-4">
+            <div class="text-center">
+            <h5 class="card-title text-cemter">Special</h5><div class="d-flex justify-content-center text-warning mb-1">
+              <div class="bi-star-fill"></div>
+              <div class="bi-star-fill"></div>
+              <div class="bi-star-fill"></div>
+              <div class="bi-star-fill"></div>
+              <div class="bi-star-fill"></div></div> <s>$20.00</s> $18.00
+            </div>
+          </div>
+          <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+            <div class="text-center">
+            <a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a>
+            </div>
+          </div>  
+        </div>
+      </div>
+      <div class="col mb-5">
+        <div class="card h-100">
+          <div class="badge bg-black rounded-1 position-absolute text-center" style="top: 0.5rem; right:0.5rem">Sale</div>
+          <!--object-fit:contain은 컨테이너에 딱 맞게 사이즈를 줄여주기-->
+          <img src="./images/에어팟맥스.jpeg" class="card-img-top" style="object-fit:contain; width:390px; height: 390px;"alt="...">
+          <div class="card-body text-center p-4">
+            <div class="text-center">
+            <h5 class="card-title text-cemter">Special</h5><div class="d-flex justify-content-center text-warning mb-1">
+              <div class="bi-star-fill"></div>
+              <div class="bi-star-fill"></div>
+              <div class="bi-star-fill"></div>
+              <div class="bi-star-fill"></div>
+              <div class="bi-star-fill"></div></div> <s>$20.00</s> $18.00
+            </div>
+          </div>
+          <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+            <div class="text-center">
+            <a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a>
+            </div>
+          </div>  
+        </div>
+      </div>  
+
+
+
+
+
+      </div>
+  </div>
+  
+</section>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>  
+</body>
+</html>

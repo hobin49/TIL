@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+</head>
+<body>
+  <!--nav-->
+  <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+    <!--container-fluid에서 container-px5로 바꿔주면 화면을 줄일시 햄버거 밑에 오른쪽 부분이 잘 출력된다.-->
+    <!-- 패딩 좌우를 줘야 가운데로 모인다-->
+    <div class="container px-5">
+      <a class="navbar-brand text-light" href="#">start bootstrap</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active text-light" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-secondary" href="#">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-secondary" href="#">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-secondary">Services</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>  
+  <!--cotent row -->
+  <!-- px-lg-5를 주면 모니터화면에서 사진과 텍스트의 간격이 줄어듭니다.-->
+  <div class= "container px-4 px-lg-5">
+    <div class="row gx-5 align-items-center my-5">
+      <!-- grid는 12칸중 7칸 쓸거야-->
+      <div class="col-lg-7">
+        <!--mb-lg-0을 하면 마진이 없어지면서 가운데로 살짝 올라간다.-->
+        <img class="img-fluid rounded mb-4 mb-lg-0" src="./images/이미지사진.jpeg" alt="">
+      </div>
+      <!--col-lg설정을 잘해줘야 이미지가 들어간다.-->
+      <!-- 12칸중 5칸을 쓸거야-->
+      <div class="col-lg-5">
+        <h1 class="font-weight-light">Business Name or Tagline</h1>
+        <p>This is a template that is great for small businesses. It doesn't have too much fancy flare to it, but it makes a great use of the standard Bootstrap core components. Feel free to use this template for any project you want!</p>
+        <a class="btn btn-primary" herf="#!">Call to Action!</a>
+      </div>
+    </div>
+  <!--content row 반드시 카드는 py padding도 역시 넉넉히 줘야 박스가 커진다 랑 m진 y에 값을 줘야 박스가 커져--> 
+  <div class="card text-white bg-secondary py-4 my-5 text-center">
+    <div class="card-body">
+      <p class="text-white m-0">
+        "This call to action card is a great place to showcase some important information or display a clever tagline!"
+      </p>
+
+    </div>
+  </div>
+  <!--카드 간격을 주려면 gx를 주고 gx-lg를 쓰는건 비율조정-->
+  <div class="row gx-4 gx-lg-5">
+    <!--데스트탑에서 lg를 사용해서 간격 조절해주고 마진바텀 5해서 분리해주고-->
+    <!-- 12에서 4씩 나눠가지는거에요 그러면 3장의 카드가 한 열에 배치된다라는거-->
+    <!-- 카드마다 마진바텀 줘야해 -->
+    <div class="col-lg-4 mb-5">
+      <!--카드 높이 지정 해주고-->
+    <div class="card h-100">
+      <div class="card-body">
+        <h2 class="card-title">Card one</h2>
+        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod tenetur ex natus at dolorem enim! Nesciunt pariatur voluptatem sunt quam eaque, vel, non in id dolore voluptates quos eligendi labore.</p>
+      </div>
+      <div class="card-footer">
+        <a class="btn btn-primary btn-sm text-light" href="#!">More info</a>
+      </div>
+    </div>
+  </div>
+  <!--모든 카드에 col-lg지정해줘야 해-->
+  <div class="col-lg-4 mb-5">
+    <!--카드 높이 지정 해주고-->
+  <div class="card h-100">
+    <div class="card-body">
+      <h2 class="card-title">Card one</h2>
+      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+    </div>
+    <div class="card-footer">
+      <a class="btn btn-primary btn-sm text-light" href="#!">More info</a>
+    </div>
+  </div>
+</div>
+<div class="col-lg-4 mb-5">
+    <!--카드 높이 지정 해주고-->
+  <div class="card h-100">
+    <div class="card-body">
+      <h2 class="card-title">Card three</h2>
+      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+    </div>
+    <div class="card-footer">
+      <a class="btn btn-primary btn-sm text-light" href="#!">More info</a>
+    </div>
+  </div>
+ </div>
+</div>
+</div>
+  <div class="py-5 bg-black text-center">
+    <!--개발자 도구를 찍어서 마진을 없애버려-->
+    <p class="text-light m-0">Copyright © Your Websight 2022</p>
+  </div>  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>    
+</body>
+</html>
