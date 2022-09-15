@@ -48,18 +48,24 @@
 
   <!--content-->
   <section class="py-5">
+    <!--pading x를 주면 가운데로 좀 몰아짐-->
   <div class="container px-4 my-5">
+    <!-- 열으로 정렬하고 아이템 사이에 패딩을 4준다 그리고 특히 오른쪽 글씨 가운데 정렬한다.-->
     <div class="row gx-4 align-items-center">
+      <!-- 전체 칸에서 2칸씩 나뉘어지니까 md-6을 해주고 공간을 가운데 정렬해준다.-->
       <div class="col-md-6 d-flex justify-content-center" >
         <img class="img-fluid" src="./images/청소기.jpeg" alt="">
       </div>
       <div class="col-md-6">
       <div> SKU: BST-498s </div>
+      <!--display를 사용해서 크게하고 글씨 굵게-->
       <h1 class="text-black display-5 fw-bold">Shop item templete</h1>
+      <!-- 마진바텀 5를 줘서 간격을 주고-->
       <div class="mb-5"><s>$45.00</s>$40.00</div>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium at dolorem quidem modi. Nam sequi consequatur obcaecati excepturi alias magni, accusamus eius blanditiis delectus ipsam minima ea iste laborum vero?</p>
       <div class="d-flex">
-        <input class="form-control text-center me-3" id="now" type="num" value="1" style="width:3rem">
+        <!-- me-3은 다음 칸과 간격을 자동으로 주고 너비를 3을 줘서 늘려준다-->
+        <input class="form-control text-center me-3" id="now" type="reset" value="1" style="width:3rem">
       <button type="button" class="btn btn-outline-dark"><i class="bi bi-cart-fill p-1"></i>Add to Cart
       </div>  
     </div>
@@ -69,9 +75,13 @@
 </section>
 
 <!--card section-->
+<!-- 패딩 아래를 5를 주면 컨테이너로부터 아래 방향으로 내려가게 된다-->
 <section class="py-5 bg-light">
+  <!-- 컨테이너로 감싸고 마진 탑을 5를 준다. -->
   <div class="container px-4 px-lg-5 mt-5">
-    <h2 class="fw-bolder mb-4">Related products</h2>
+    <!--글씨와 사진사이에 마진 바텀을 주고 글씨를 굵게-->
+    <h2 class="fw-bolder mb-5">Related products</h2>
+    <!--한 페이지의 3개의 사진을 넣으려면 md-4를 해줘야 한다.-->
     <div class="row row-cols-12 row-cols-2 row-cols-md-4 row-cols-xl-3 gx-4 justify-content-center">
       <div class="col mb-5">
         <div class="card h-100">
