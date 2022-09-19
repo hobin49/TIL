@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<input>
+  <button type="button">버튼</button>
+  <button onclick="alertMessage()">나를 눌러봐!</button>
+  <button id ="my-button">나를 눌러봐!!</button>
+  <hr>
+  <p id = "my-paragraph"></p>
+  
+  <form action="#">
+    <label for = "my-text-input">내용을 입력하세요</label>
+    <input id = "my-text-input" type="text">
+  </form>
+  <hr>
+
+  <h2> Change My Color</h2>
+  <label for ="change-color-input">원하는 색상을 영어로 입력하세요.</label>
+  <input id="change-color-input"></input>
+  <hr>
+  <script>
+    const btn = document.querySelector('button')
+    btn.addEventListener('click', function(event) {
+      alert('버튼이 클릭되었습니다')
+      console.log(event)
+    })
+
+    const alertMessage = function () {
+      alert('식사는 맛있게 하셨나요?')
+    }
+
+    const myButton = document.querySelector('#my-button')
+    myButton.addEventListener('click', alertMessage)
+
+    const myTextInput = document.querySelector('#my-text-input')
+    myTextInput.addEventListener('input', function(event) {
+      //console.log(event)
+      const myPtag = document.querySelector('#my-paragraph')
+      myPtag.innerText = event.target.value
+    })
+
+    const colorInput = document.querySelector('#change-color-input')
+
+    const changeColor = function (event) {
+      const h2Tag = document.querySelector('h2')
+      h2Tag.style.color = event.target.value
+    }
+
+    colorInput.addEventListener('input', changeColor)
+    
+
+  </script>
+</body>
+</html>

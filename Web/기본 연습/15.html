@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>정말 <span>중요한</span> 내용</h1>
+  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error est ullam, numquam, nostrum ea iste ex harum iure a illo beatae earum! Quisquam, rem cupiditate. Nisi sapiente suscipit laboriosam perferendis autem, modi itaque rerum molestiae molestias dolorem deserunt excepturi sit dignissimos iusto dolore voluptates? Dolores blanditiis ex voluptatem sunt ipsum voluptatibus nobis placeat ut magni dolor quia sint, at nulla laudantium tempore saepe in ea inventore ipsam illo, ab doloremque non labore ipsa! Quia, fugit sunt nostrum molestias consequatur, similique sapiente, facere numquam impedit nulla commodi aliquam doloremque explicabo magnam saepe tenetur ipsum animi neque quaerat architecto reprehenderit maxime? Aliquam asperiores numquam id necessitatibus laudantium sed quos, tempore odit quaerat aut doloremque alias culpa voluptas aspernatur placeat consequuntur aperiam facilis recusandae nihil illum quae molestias blanditiis! Iure consequuntur numquam, corrupti nobis esse recusandae sequi fuga tempore. Doloremque facere necessitatibus in a ad error, nemo quo labore numquam sit minus deserunt debitis voluptatem? Cupiditate animi natus incidunt quo, pariatur voluptas eaque tempora quaerat aut dolores eius dolor explicabo perspiciatis, possimus dolorem, obcaecati aperiam eveniet! Eligendi sequi quidem eum, sunt voluptas quia, ratione magnam modi quae non rerum voluptate doloremque corporis eaque doloribus cumque tenetur harum et. Aliquam eaque voluptatum quo nostrum autem illum perspiciatis quam consequuntur neque beatae dolorem, repellendus unde facere alias ut molestiae soluta tenetur, delectus eos doloribus eveniet ab quaerat reiciendis quibusdam. Dignissimos, eveniet mollitia? Reprehenderit numquam magni cupiditate cum obcaecati. Tempora sunt exercitationem repellat voluptas. Molestias nulla facere dolorem sed, similique aliquid adipisci magni aut totam nisi ad quo repellendus culpa illum veritatis asperiores at odio! Ea animi consequuntur nemo impedit est beatae unde, exercitationem voluptates sit expedita? Omnis sunt unde rerum nisi adipisci cupiditate commodi provident facilis hic recusandae minima doloremque necessitatibus reprehenderit neque labore maiores voluptate, culpa itaque non dolores! Maiores hic explicabo molestiae suscipit eaque veniam quidem pariatur eius id beatae. Fugiat est nulla, amet accusantium, minus quo rerum suscipit eum soluta eaque harum dolorem repellendus delectus recusandae enim eos repudiandae hic saepe, voluptatibus quae ab beatae? Quis, provident quam. A inventore soluta repudiandae voluptate, asperiores ullam ipsa. Quasi, minima? Praesentium, voluptatibus natus quasi omnis nulla labore aliquid ipsam illo distinctio fuga quibusdam. Dicta adipisci ad natus non ipsum, qui itaque reiciendis porro sequi. Consectetur ex amet voluptatibus assumenda. Neque enim pariatur deserunt nostrum, eum vero iste delectus quasi nisi? Voluptatum placeat a quo ducimus, optio beatae libero quam reiciendis fugit nemo odio consequuntur dicta, temporibus nihil modi doloremque itaque laborum? Est, eveniet tenetur officia voluptas blanditiis molestias, omnis, accusamus ab at alias repudiandae exercitationem voluptates similique adipisci mollitia? Assumenda, libero. Nesciunt voluptatum, veniam mollitia alias ipsam fugiat quam cupiditate? Minima magnam a modi amet perferendis quisquam perspiciatis ab est impedit animi, deleniti tempora sapiente. Recusandae fugiat nobis deserunt, in hic eveniet, magni saepe, facilis alias consectetur est harum quisquam. Voluptatem, voluptatum autem doloribus illo, beatae rerum sequi modi repellat tempore earum velit! Animi voluptatibus dolorum, id dolorem cupiditate quas magnam tempore. Nam cumque optio veniam. Id rem error laudantium excepturi facere, voluptates accusantium.</p>
+  <script>
+    document.querySelecter('h1')
+    h1.addEventListener('copy', function(event) {
+      //event 기본 동작을 막고,
+      event.preventDefault()
+      console.log('삐빅 복사를 할 수 없습니다.')
+
+    })
+
+    h1.addEventListener('drag', function(event) {
+      event.preventDefault()
+      console.log('드래그가 금지되어 있습니다.')
+    })
+  </script>
+</body>
+</html>
