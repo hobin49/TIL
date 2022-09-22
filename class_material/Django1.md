@@ -138,7 +138,9 @@
 - 그리고 장고를 사용하기 위해서 장고를 관리하는 `django-admin` 을 사용해준다.
 - django-admin startproject [프로젝트이름] [시작경로]
 
-​		`django-admin startproject firstpjt .(현재경로)`
+​		`django-admin startproject firstpjt.(현재경로)`
+
+- 코드 에디터를 열고 싶으면 `code .`
 
 - 가상환경을 끌때는 deactivate 
 
