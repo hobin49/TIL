@@ -10,6 +10,8 @@
 
   `pip freeze > requirements.txt`
 
+  ​	- 내가 실수로 지웠을때 똑같은 패키지를 설치할 수 있다.가상환경을 넣은건 똑같은 파일이 존재 프로젝트 할 때 중요
+
 - [참고] LTS
 
   - Long Term Support(장기 지원 버전)
@@ -24,6 +26,8 @@
 - 서버 실행
 
 `python manage.py runserver`
+
+`pip freeze requirements.txt` 이것
 
 - 프로젝트 구조 
   - `__init__.py` 
