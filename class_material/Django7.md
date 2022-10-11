@@ -249,6 +249,135 @@ form = ArticleForm(instance=article)
     {% endblock content %}
     ```
 
+  - update - view 수정
+
+    ```python
+    # articles/views.py
+    
+    def update(request, pk):
+      	article = Article.objects.get(pk=pk)
+        form = ArticleForm(request.POST, instance = article)
+        if form.is_valid():
+          form.save()
+        	return redirect('articles:detail', article.pk)
+        context = {
+          'form': form,
+        }
+        return render(request, 'articles/edit.html', context)
+    ```
+
+
+
+### Handling HTTP requests
+
+- Create
+
+  - new와 create view 함수를 합침
+  - 각각의 역할은 request.method 값을 기준으로 나뉜다.
+
+  ```python
+  # articles/views.py
+  
+  def create(request):
+    
+    if request.method == "POST":
+      form = ArticleForm(request.POST)
+      if form.is_valid():
+        form.save()
+        return redirect('articles:detail')
+    else:
+      form = ArticleForm()
+    context = {
+      "form" : form
+    }
+    return render(request, 'articles/new.html', context)
+  ```
+
+  `path('create/', views.create, name='create')`
+
+  - new.html -> create.html 이름변경 및 action 속성 값 수정
+
+  ```html
+  <!- articles/create.html -->
+  {% extends 'base.html' %}
+  
+  {% block content %} 
+  	<h1>create</h1>
+  	<form action = "{% url 'articles:create' %}" method="POST">
+  		{% csrf_token %}
+      {{form.as_p}}
+  		<input type="submit">
+  	</form>
+  	<hr>
+  	<a href="{% url 'articles:index' %}">[back]</a>
+  {% endblock %}
+  ```
+
+  - new.html -> create.html 이름변경으로 인한 템플릿 경로 수정
+
+  ```python
+  # articles/views.py
+  
+  def create(request):
+    if request.method = "POST":
+      form = ArticleForm(request.POST)
+      if form.is_valid():
+        article = form.save()
+        return redirect("articles:detail", article.pk)
+    else:
+      form = ArticleForm()
+    context ={
+      "form": form
+    }
+    return render(request, "articles/create.html", context)
+  ```
+
+  - Index 페이지에 있던 new 관련 링크 수정
+
+  ```html
+  <!- articles/index.html -->
+  
+  {% extends 'base.html' %}
+  
+  {% block content %}
+  	<h1>Articles</h1>
+  	<a href = "{% url 'articles:create' %}">CREATE</a>
+  	<hr>
+  
+  {% endblock content %}
+  ```
+
+- update
+
+  - edit과 update view 함수를 합친다
+
+  ```python
+  # articles/views.py
+  
+  def update(request, pk):
+    article = Article.objects.get(pk=pk)
+    
+    if request.method == "POST":
+      	form = ArticleForm(reuqest.POST, instance=article)
+        if form.is_valid():
+          form.save()
+          return redirect('articles:detail', article.pk)
+    else:
+      form = ArticleForm(instance=article)
+    context = {
+      "form": form
+    }
+    
+    return render(request, "articles/update.html", context)
+  ```
+
+  ```html
+  <!--articles/detail.html -->
+  <a href="{% url 'articles:update' article.pk %}">UPDATE</a><br>
+  ```
+
+  
+
 ### Django admin
 
 - `python manage.py createsuperuser`
@@ -298,7 +427,7 @@ admin.site.register(Article, ArticleAdmin)
 
 - 부트스트랩
 
-  - `pip install django-bootstrap`
+  - `pip install django-bootstrap5`
   - `pip freeze > requirements.txt`
 
   ```html

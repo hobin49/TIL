@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content%}
+<!--헷갈리지 말것은 모든 데이터를 도는게 아니야-->
+<h2>{{article.pk}}</h2>
+<h3>{{article.created_at}} | {{article.updated_at}}</h3>
+<p>{{article.content}}</p>
+<!--수정페이지로 이동 !수정할 글만 이동해야한다.-->
+<a href="{% url 'articles:update' article.pk%}">수정하기</a>
+{% endblock %}

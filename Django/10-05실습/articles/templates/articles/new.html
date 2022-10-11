@@ -1,0 +1,18 @@
+{% extends 'base.html'%}
+<!-- 부트스트랩 사용하기 위한 필수 코드-->
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% block content %}
+<h1>글쓰기</h1>
+<!-- form: 사용자에게 양식을 제공하고 값을 받아서(input: name, value) 서버에 전송(form: action)-->
+<form action="{% url 'articles:create'%}" method="POST">
+  {% csrf_token%}
+  {% bootstrap_form article_form %}
+  <!-- 주석처리-->
+  {# article_form.as_p #}
+
+  {% bootstrap_button button_type="submit" content="제출" %}
+</form>
+
+{% endblock %}
