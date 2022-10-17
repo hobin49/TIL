@@ -1,0 +1,18 @@
+{% extends 'base.html'%}
+{% load static %} 
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% block content %} 
+<d class="container d-flex flex-column">
+
+<h1>게시글 목록</h1>
+{% for article in articles%}
+{% if article.thumbnail %}
+  <img src="{{article.thumbnail.url}}" alt="{{article.thumbnail}}" width="400" height="300">
+{% endif %}
+<a href="{% url 'articles:create'%}">생성하기</a>
+<a href="{% url 'articles:detail' article.pk%}">상세보기</a>
+{%endfor %}
+</div>
+{% endblock %}
