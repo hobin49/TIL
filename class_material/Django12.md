@@ -65,7 +65,7 @@
     - 개발 단계에서 사용자가 업로드 한 파일 제공하기
 
       ```python
-      # crud/urls.py
+      # urls.py
       from django.conf.urls.static import static
       
       urlpatterns = [
