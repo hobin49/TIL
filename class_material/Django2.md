@@ -197,11 +197,11 @@
   
 
   ```python
-  URL path('index/', views.index)
+  URL |path('index/', views.index)
   
-  view def index(request):
+  view |def index(request):
     			return render(request, 'index.html')
-  Template articles/templates/index.html
+  Template | articles/templates/index.html
   ```
 
 - 추가설정

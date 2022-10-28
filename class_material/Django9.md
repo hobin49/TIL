@@ -52,7 +52,7 @@
       
     ]
     
-    #메인Pjt/urls.py
+    #메인Pjt/urls.py - 매핑
     urlpatterns = [
       ...,
       path('accounts/', include('accounts.urls')),

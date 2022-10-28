@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %} 
+{% bootstrap_javascript%}
+{% block content %} 
+<div class="container">
+<h1>게시글 목록</h1>
+<a href="{% url 'articles:create'%}" class="btn btn-primary">생성하기</a>
+{% for article in articles %} 
+  <h3>작성자 이름:{{article.user}}</h3>
+  <h2>리뷰 이름:{{article.title}}</h2>
+  <p>{{article.user.username}}</p>
+  <h2>리뷰 내용:{{article.content}}</h2>
+  <p class="text-muted">{{article.user.username}}</p>
+  <a href="{% url 'articles:detail' article.pk%}" class="btn btn-dark">리뷰 보기</a>
+</div>
+  {% endfor %}
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %} 
+{% bootstrap_javascript%}
+{% block content %} 
+
+<h4>댓글</h4>
+
+<h3><a href="{% url 'accounts:index' article.user.pk%}">{{ article.user.username }}</a></h3>
+
+{% if request.user.is_authenticated %}
+<form action ="{% url 'articles:comments_create' article.pk %}" method="POST">
+  {% csrf_token%}
+  {% bootstrap_form comment_form layout="inline"%} 
+  {% bootstrap_button button_type="submit" content="OK" %}
+</form>
+{% endif %}
+
+<h4> 댓글 목록</h4>
+{% if comments %}
+  <p><b>{{comments|length}} 개의 댓글이 있습니다.</b></p>
+{% endif %}
+<h4>작성자</h4>
+<a href = "{% url 'accounts:index' article.user.pk %}">{{article.user}}</a>
+<hr>
+{% for comment in comments%} 
+  <p>{{comment.content}}</p>
+  {% if request.user == article.user %}
+  <form action="{% url 'articles:comments_delete' article.pk comment.pk %}" method="POST">
+    {% csrf_token %} 
+    <input type="submit" value="DELETE">
+  </form>
+  {% endif %}
+  {% endfor %}
+{% endblock %}

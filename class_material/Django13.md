@@ -107,7 +107,7 @@ class Comments(models.Model):
 class CommentForm(forms.ModelForm):
 
     class Meta:
-        model = Comment 
+        model = Comments 
         fields = ['content',]
 ```
 
@@ -267,7 +267,7 @@ b.a_set
 def detail:
   context = {
     'article': article,
-    "comments" : article.comment.set.all(),
+    "comments" : article.comment_set.all(),
   }
 ```
 
@@ -309,7 +309,7 @@ def detail:
   comment_form = CommentForm()
   context = {
     'article': article,
-    "comments" : article.comment.set.all(),
+    "comments" : article.comment_set.all(),
     'comment_form': comment_form, 
   }
   return render(request, 'articles/detail.html', context)

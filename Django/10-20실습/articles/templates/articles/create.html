@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %} 
+{% bootstrap_javascript%}
+{% block content %}
+<h1 class="text-center p-5">작성</h1>
+<div class="m-5 p-3 border border-3 border-dark rounded">
+<form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form article_form %}
+    {% bootstrap_button button_type="submit" content="OK" %}
+</form>
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %} 
+{% bootstrap_javascript%}
+{% block content %} 
+    <div class="container mt-3">
+        <form action="" method="POST">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            {% bootstrap_button button_type="submit" content="OK" %}
+        </form>
+    </div>
+{% endblock %}

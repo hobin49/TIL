@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %} 
+{% bootstrap_javascript%}
+{% block content %}
+{% for article in articles %} 
+  <p>{{article.content}}</p>
+  {% endfor %}
+<hr>
+{% for comment in comments %}
+  <p>{{comment.content}}</p>
+  {% endfor %}
+{% endblock %}

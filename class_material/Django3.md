@@ -32,7 +32,7 @@
 - 기본 타입은 string이며 5가지 타입으로 명시할 수 있다.
 - str
   - '/'를 제외하고 비어 있지 않은 모든 문자열
-  - 작서앟지 않을 경우 기본 값
+  - 작성하지 않을 경우 기본 값
 - int
   - 0 또는 양의 정수와 매치
 
@@ -202,7 +202,7 @@ urlpatterns = [
 - Query String Parameters
 
   - 사용자가 입력 데이터를 전달하는 방법 중 하나로, url 주소에 데이터를 파라미터를 통해 넘기는 것
-  - 이러한 문자열은 앰퍼샌드(&)로 연결된 key=value 쌍으로 구서오디며 기본 URL과 물음표(?)로 구분된다
+  - 이러한 문자열은 앰퍼샌드(&)로 연결된 key=value 쌍으로 구성이며 기본 URL과 물음표(?)로 구분된다
     - 예시
       - http://host:port/path?key=value&key=value
   - Query String이라고도 함

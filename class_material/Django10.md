@@ -181,10 +181,10 @@ def login(request):
 
 {% block content %}
 	<h1>로그인</h1>
-	<form action="{% url 'accounts:login' %}" method="POST">
+	<form action="" method="POST">
     {% csrf_token %}
-    {{form.as_p}}
-    <input type="submit">  
+    {% bootstrap_form form %}
+    {% bootstrap_button button_type="submit" content="OK" %}  
 	</form>
 ```
 
