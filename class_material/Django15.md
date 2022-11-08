@@ -8,6 +8,7 @@
 
 - 병원 예약 시스템 구축을 위한 데이터 베이스 모델링을 진행한다면? 
   - 한 환자가 두 의사한테 예약하는건 N대 1로 불가능하다. 
+  
 - 중개 모델
   - 환자 모델의 외래키를 삭제하고 별도의 예약 모델을 새로 작성
   - 예약 모델은 의사와 환자에 각각 N:1 관계를 가진다.
@@ -105,6 +106,8 @@
     ```
 
     ```python
+    #1번 의사 조회하기
+    doctor1 = Doctor.objects.get(pk=1)
     #에러 발생 (related_name을 설정하면 기존 _set manager는 사용할 수 없다)
     doctor1.patient_set.all()
     AttributorError: "Doctor" object has no attribute 'patient_set'
@@ -118,12 +121,12 @@
   
 
   - 'through' argument
-
+  
     - 그렇다면 중개 모델을 직접 작성하는 경우는 없을까?
       - 중개 테이블을 수동으로 지정하려는 경우 through 옵션을 사용하여 사용하려는 중개 테이블을 나타내는 Django 모델을 지정 가능
     - 가장 일반적인 용도는 중개테이블에 추가 데이터를 사용해 다대다 관계와 연결하려는 경우
     - 추가 모델을 작성할때 사용한다.
-
+  
     ```python
     #외래키 삭제 
     Class Patient(models.Model):
@@ -165,7 +168,7 @@
     - add(), remove(), create(), clear() ...
 
   - 데이터베이스에서의 표현
-
+  
     - Django는 다대다 관계를 나타내는 중개 테이블을 만든다
     - 테이블 이름은 ManyToManyField 이름과 이를 포함하는 모델의 테이블 이름을 조합하여 생성된다
     - 'db_table' arguments를 사용하여 중개 테이블의 이름을 변경할 수도 있다
@@ -173,20 +176,20 @@
   - ManyTomanyField's Arguments
 
     - related_name
-
-      - target model이 source model을 참조할 떄 사용할 manager name
+  
+      - target model이 source model을 참조할 때 사용할 manager name
       - ForeignKey의 related_name 동일
 
     - through
-
+  
       - 중개 테이블을 직접 작성하는 경우, through 옵션을 사용하여 중개 테이블을 나타내는 Django 모델을 지정
       - 일반적으로 중개 테이블에 추가 데이터를 사용하는 다대다 관계와 연결하려는 경우에 사용된다.
 
-    - symmetircal 
-
+    - symmetrical 
+  
       - 기본 값 : True
       - ManyToManyField가 동일한 모델(on self)을 가리키는 정의에서만 사용
-
+  
       ```python
       #예시
       
@@ -194,7 +197,7 @@
         	friends = models.ManyToManyField('self')
           # friends = models.ManyToManyField('self', symmetrical=False)
       ```
-
+  
       - True일 경우
         - _set 매니저를 추가 하지 않는다
         - Source 모델의 인스턴스가 target 모델의 인스턴스를 참조하면 자동으로 target 모델 인스턴스도 source 모델 인스턴스를 자동으로 참조하도록 함(대칭)
@@ -203,7 +206,7 @@
         - Follow 기능 구현에서 다시 확인할 예정
 
     - Related Manager
-
+  
       - N:1 혹은 M:N 관계에서 사용 가능한 문맥(context)
       - Django는 모델 간 N:1 혹은 M:N 관계가 설정되면 역참조시에 사용할 수 있는 manager를 생성
         - 우리가 이전에 모델 생성 시 objects라는 매니저를 통해 queryset api를 사용했던 것처럼 related manager를 통해 queryset api를 사용할 수 있게 된다.
@@ -214,7 +217,7 @@
         - add(), remove(), create(), clear(), set() 등 
 
     - methods 
-
+  
       - add()
         - "지정된 객체를 관련 객체 집합에 추가"
         - 이미 존재하는 관계에 사용하면 관계가 복제되지 않는다
@@ -225,7 +228,7 @@
         - 모델 인스턴스, 필드 값(PK)을 인자로 허용한다. 
 
     - 중개 테이블 필드 생성 규칙
-
+  
       - 소스 및 대상 모델이 다른 경우
         - id
         - <containing_model>_id
@@ -242,7 +245,7 @@
   ### Like 
 
   - ManyToManyField 작성
-
+  
     ```python
     # articles/models.py
     
@@ -258,13 +261,13 @@
   - 마이그레이션 진행
 
   - 모델 관계 설정
-
+  
     - like_users 필드 생성 시 자동으로 역참조에는 .article_set 매니저가 생성된다
     - 그러나 이전 N:1(Article-User)관계에서 이미 해당 매니저를 사용 중
       - user.article_set.all() -> 해당 유저가 작성한 모든 게시글 조회
       - user가 작성한 글들(user.article_set)과 user가 좋아요를 누른 글(user.article_set)을 구분할 수 없게 된다.
     - user와 연계된 ForeignKey 혹은 ManyToManyField 중 하나에 related_name을 작성해야 한다.
-
+  
     - User - Article간 사용 가능한 related manager 정리
       - article.user
         - 게시글을 작성한 유저 - N:1
@@ -274,7 +277,7 @@
         - 게시글을 좋아요한 유저 - M:N 
       - user.like_articles
         - 유저가 좋아요한 게시글(역참조) - M:N
-
+  
     ```python
     # articles/urls.py
     urlpattern = [
@@ -293,13 +296,13 @@
           	article.like_users.add(request.user)
         return redirect('articles:index')
     ```
-
+  
     - .exists()
       - QuerySet에 결과가 포함되어 있으면 True를 반환하고 그렇지 않으면 False를 반환
       - 특히 큰 QuerySet에 있는 특정 개체의 존재와 관련된 검색에 유용
 
   - `AUTH_USER_MODEL` 는 외래키 모델을 전달할 때 문자열로 전달합니다. 외래키가 임포트될 때 모델 클래스 탐색에 실패하면 모든 앱이 로드될 때까지 실제 모델 클래스의 탐색을 미룹니다. 그렇기 때문에 항상 올바른 사용자 모델을 얻을 수 있습니다.
-
+  
   ```html
   <div>
     {% if request.user.is_authenticated %}
@@ -318,7 +321,7 @@
   
 
   
-
+  
   좋아요 기능 구현
 
 (1) DB 좋아요 기록할 것인지..?
