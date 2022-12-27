@@ -368,11 +368,11 @@ if (markBmi > johnBmi) {
 // string to number manually
 console.log('I am' + 23 + ' years old') 
 // 23-13-3 = 10 minus triggers the opposite conversion
-//string are converted to numbers 10
+//string are converted to numbers 10(빼기는 숫자형 덧셈은 문자열)
 console.log('23' - '13' - 3);
 //three strings are concatenated. 23103
 console.log('23' + '10' + 3);
-// 42
+// 46
 console.log('23' * '2');
 // 11.5
 console.log('23' / '2');
@@ -554,7 +554,7 @@ if (dolphins > koalas && dolphins >= 100) {
 
 #### 26.The switch Statement
 
-- switch문에서 break를 사용하지 않을 경우에 다음 케이스로 계속 이동한다.
+- switch문에서 **break를 사용하지 않을 경우에 다음 케이스로 계속 이동**한다.
 - if문에 비하면 덜 쓰인다. if문의 대안으로 나온 것은 아니다.
 
 ```js
