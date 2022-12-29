@@ -706,3 +706,53 @@ console.log(calcAverage(totals));
 console.log(calcAverage(tips));
 ```
 
+
+
+#### Debuging Process
+
+- Identify 
+  - During development
+  - Testing software
+  - User reports during production
+  - Context: browsers, users, etc.
+- find
+  - Developer console(simple code)
+  - Debugger (complex code)
+- fix
+  - replace wrong solution with new correct solution
+- Prevent
+  - searching for the same bug in simailar code
+  - writing tests using testing software
+
+- debugger를 입력하면 자동으로 소스로 이동해준다.
+
+
+
+#### Coding challenge (Developer skills part)
+
+```js
+const printForecast = function (data) {
+  // obejct to string
+  let str = '';
+  for (let i = 0; i < data.length; i++) {
+    str += `${data[i]} in ${i + 1} days ... `;
+  }
+  console.log('...' + str);
+};
+
+const data1 = [17, 21, 23];
+
+printForecast(data1);
+
+// Use the problem-solving framework
+// 1) understanding the problem
+// - Array transformed to string, separted by ...
+// - What is the X days? answer: index +1
+
+// 2) Breaking up into sub-problems
+// - Transform array into string
+// - Transform each element to string with
+// - string needs to contain day (index + 1)
+// - log string to console
+```
+

@@ -423,8 +423,8 @@ if (money) {
 // height === undefined 
 let height; 
   if(height) {
-    //executed
     console.log('YAY! height is defined');
+  //executed
   } else {
     console.log('Height is Undefined');
   }
@@ -444,7 +444,7 @@ let height;
 const age = '18';
   //not executed
 if(age === 18) console.log("You just became an adult:D (strict)");
-  // esecuted
+  // executed
 if(age == 18) console.log("You just became an adult:D (loose)");
 
 

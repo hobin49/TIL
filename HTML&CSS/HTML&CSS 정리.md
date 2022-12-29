@@ -110,10 +110,38 @@
   ```
   
   ```css
+  /*사진 모서리를 액자처럼 꾸미기 */
+  .pic {
+    position: absolute;
+  }
+  
+  .pic::before,
+  .pic::after {
+    content: "";
+    position: absolute;
+    transform: rotate(-35deg);
+    /*대각선의 너비 조절*/
+    width: 70px;
+    /*대각선의 높이 조절*/
+    height: 25px;
+    background-color: #fff;
+  }
+  
+  .pic::before {
+    top: -10px;
+    left: -25px;
+    border-bottom: 1px solid #aaa;
+  }
+  
+  .pic::after {
+    bottom: -10px;
+    right: -25px;
+    border-top: 1px solid #aaa;
+  }
+  
   ```
   
   
-
 
 
 
