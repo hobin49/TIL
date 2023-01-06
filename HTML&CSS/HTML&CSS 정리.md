@@ -141,7 +141,60 @@
   
   ```
   
+  ```css
+  /*로고의 흰 배경을 투과시키기 */
+  /*이 방법은 로고 마크가 검은색이고 배경이 흰색일 때만 구현할 수 있다*/
+  html, body {
+     height: 500px;
+  }
   
-
-
+  img {
+     mix-blend-mode: multiply; /* 로고 이미지의 흰 배경색을 투과 */
+  }
+  
+  .logo-background {
+     height: 100%;
+     display: flex;
+     justify-content: center; /* 배경 이미지를 좌우 중앙 배치 */
+     align-items: center;    /* 배경 이미지를 상하 중앙 배치 */
+     background-image: url("../images/pic037.jpg"); /* 배경 사진 지정 */
+     background-size: auto 100%;
+     background-repeat: no-repeat;
+     background-position: center center;
+  }
+  
+  .logo {
+     display: flex;
+     justify-content: center; /* 로고 이미지를 좌우 중앙 배치 */
+     align-items: center; /* 로고 이미지를 상하 중앙 배치 */
+  }
+  ```
+  
+  ```css
+  .pic {
+     position: absolute; /* 대각선 필터 배치 기준 */
+  }
+  
+  .pic img {
+     display: block; /* 이미지의 불필요한 여백 처리 */
+  }
+  
+  .pic::before {
+     content: '';
+     position: absolute;
+     top: 0px;
+     left: 0px;
+     width: 100%;
+     height: 100%;
+     background-image:
+        repeating-linear-gradient(
+           -45deg, /* -45° 회전 */
+           rgba(201 72 31 / .6) 0px, rgba(201 72 31 / .6) 1px, /* 반투명 선 */
+           rgba(0 0 0 / 0) 0%, rgba(0 0 0 / 0) 50% /* 여백(투명) 부분 */
+        );
+     background-size: 6px 6px;
+  }
+  ```
+  
+  
 
