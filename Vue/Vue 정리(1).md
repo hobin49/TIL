@@ -458,3 +458,87 @@
     - 먼저 이벤트 버스로 활용할 새 인스턴스를 1개 생성하고 eventBus라는 변수에 참조한다. 이제 eventBus변수로 새 인스턴스의 속성과 메서드에 접근할 수 있다
     - 하위 컴포넌트에는 template 속성과 methods 속성을 정의한다. Methods 속성에는 showLog() 메서드를 정의하고, 메서드 안에는 eventBus.$emit()을 선언하여 triggerEventBus라는 이벤트를 발생하는 로직을 추가한다. 이 이벤트를 발생할 때 수신하는 쪽에 인자 값으로 100이라는 숫자를 함께 전달한다. 
     - 상위 컴포넌트의 created 라이프 사이클 훅에 eventBus.$on()으로 이벤트를 받는 로직을 선언한다. 발생한 이벤트 triggerEventBus를 수신할 때 앞에서 전달된 인자 값 100이 콘솔에 출력된다. 
+
+
+
+
+
+
+
+#### 4. 상용 웹 앱을 개발하기 위한 필수 기술들 - 라우터 & HTTP 통신
+
+- SPA(싱글 페이지 애플리케이션)
+  - 페이지를 이동할 때마다 서버에 웹 페이지를 요청하여 새로 갱신하는 것이 아니라 미리 해당 페이지들을 받아 놓고 페이지 이동 시에 클라이언트의 라우팅을 이용하여 화면을 갱신하는 패턴을 적용한 애플리케이션
+
+- 라우팅이란?
+
+  - 라우팅이란 웹 페이지 간의 이동 방법을 말합니다. 라우팅은 현대 웹 앱 형태 중 하나인 싱글 페이지 애플리케이션에서 주로 사용하고 있습니다. 
+  - 라우팅을 이용하면 화면 간의 전환이 매끄러울 뿐만 아니라 애플리케이션의 사용자 경험을 향상 시킬 수 있다.
+  - 일반적으로 브라우저에서 웹 페이지를 요청하면 서버에서 응답을 받아 웹 페이지를 다시 ㄷ사용자에게 돌려주는 시간 동안 화면 상에 깜빡거림 현상이 나타난다. 그런데 라우팅을 사용하면 깜빡거림 없이 화면을 매끄럽게 전환하고 더 빠르게 화면을 조작할 수 있어서 사용자 경험이 향상된다.
+  - 뷰뿐만 아니라 다른 자바스크립트 프레임워크들도 이용하여 화면을 전환하고 있으며, 일반 HTML 파일들로 라우팅 자바스크립트 라이브러리를 이용하여 라우팅 방식의 페이지 이동을 구현할 수 있다.
+
+  
+
+- 뷰 라우터
+
+  - 뷰 라우터는 뷰에서 라우팅 기능을 구현할 수 있도록 지원하는 공식 라이브러리입니다.  뷰 라우터를 이용하여 뷰로 만든 페이지 간에 자유롭게 이동할 수 있다. 
+
+  - 특수 태그와 기능
+
+    - `<router-link to="URL 값"> ` : 페이지 이동 태그. 화면에서는 `<a>` 로 표시되며 클릭하면 to에 지정한 URL로 이동한다.
+    - `<router-view>`: 페이지 표시 태그. 변경되는 URL에 따라 해당 컴포넌트를 뿌려주는 영역입니다. 
+      - `<router-view>`에 나타낼 화면은 `<scirpt>`에서  정의한다. 
+
+    ```html
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Vue Router Sample</title>
+      </head>
+      <body>
+        <div id="app">
+          <h1>뷰 라우터 예제</h1>
+          <p>
+            <!--URL 값을 변경하는 태그-->
+            <router-link to="/main">Main 컴포넌트로 이동</router-link>
+            <router-link to="/login">Login 컴포넌트로 이동</router-link>
+          </p>
+          <!--URL 값에 따라 갱신되는 화면 영역-->
+          <router-view></router-view>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+        <script src="https://unpkg.com/vue-router@3.0.1/dist/vue-router.js"></script>
+        <script>
+          // Main, Login 컴포넌트 정의
+          var Main = { template: "<div>main</div>" };
+          var Login = { template: "<div>login</div>" };
+    
+          // 각 URL에 맞춰 표시할 컴포넌트 지정
+          var routes = [
+            { path: "/main", component: Main },
+            { path: "/login", component: Login },
+          ];
+    
+          //뷰 라우터 정의
+          var router = new VueRouter({
+            routes,
+          });
+    
+          //뷰 인스턴스에 라우터 추가
+          var app = new Vue({
+            router,
+            //$mount()는 el 속성과 같이 인스턴스를 화면에 붙여주는 역할을 합니다.
+          }).$mount("#app");
+        </script>
+      </body>
+    </html>
+    
+    ```
+
+    - `$mount() API란?` 
+      - el 속성과 동일하게 인스턴스를 화면에 붙이는 역할을 합니다. 인스턴스를 생성할 때 el 속성을 넣지 않았더라도 생성하고 나서 `$mount()`를 이용하면 강제로 인스턴스를 화면에 붙일 수가 있습니다. 참고로 뷰 라우터의 공식 문서는 모두 인스턴스 안에 el을 지정하지 않고 라우터만 지정하여 생성한 다음 생성된 인스턴스를 $mount()를 이용해 붙이는 식으로 안내하고 있다. 
+
+    
