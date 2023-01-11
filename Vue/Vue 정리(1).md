@@ -541,4 +541,208 @@
     - `$mount() API란?` 
       - el 속성과 동일하게 인스턴스를 화면에 붙이는 역할을 합니다. 인스턴스를 생성할 때 el 속성을 넣지 않았더라도 생성하고 나서 `$mount()`를 이용하면 강제로 인스턴스를 화면에 붙일 수가 있습니다. 참고로 뷰 라우터의 공식 문서는 모두 인스턴스 안에 el을 지정하지 않고 라우터만 지정하여 생성한 다음 생성된 인스턴스를 $mount()를 이용해 붙이는 식으로 안내하고 있다. 
 
+    ```html
+    <!-- 라우터 URL의 해시 값(#)을 없애는 방법- history mode 사용--> 
+    var router = new VueRouter({
+    	mode: 'history',
+    	routes
+    });
+    ```
     
+  - - 네스티드 라우터
+  
+      - 네스티드 라우터는 라우터로 페이지를 이동할 때 최소 2개 이상의 컴포넌트를 화면에 나타낼 수 있다. 네스티드 라우터를 이용하면 URL에 따라서 컴포넌트의 하위 컴포넌트가 다르게 표시된다.
+      - 네스티드 라우터와 기본 라우터의 차이점은 최상위 컴포넌트에도 `<router-view>`가 있고, 최상위 컴포넌트의 하위 컴포넌트에도 `<rotuer-view>` 가 있다는 것이다. 그렇기 때문에 URL에 따라 하위 컴포넌트의 내용이 바뀌게 됩니다. 
+      - **네스티드 라우터는 화면을 구성하는 컴포넌트의 수가 적을 때는 유용하지만 한 번에 더 많은 컴포넌트를 표시하는 데는 한계가 있다.**
+  
+      ```html
+      <!DOCTYPE html>
+      <html lang="en">
+        <head>
+          <meta charset="UTF-8" />
+          <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <title>Vue Nested Router</title>
+        </head>
+        <body>
+          <div id="app">
+            <!--User 컴포넌트가 뿌러질 영역-->
+            <router-view></router-view>
+          </div>
+          <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+          <!--Router CDN-->
+          <script src="https://unpkg.com/vue-router@3.0.1/dist/vue-router.js"></script>
+          <script>
+            // 하위 컴포넌트가 뿌려질 영역
+            var User = {
+              template: `<div> User Component <router-view></router-view> </div>`,
+            };
+      
+            //컴포넌트 내용 정의
+            var UserProfile = { template: "<p>User Profile Component</p>" };
+            var UserPost = { template: "<p>User Post Component</p>" };
+      
+            // 네스티드 라우팅 정의
+            var routes = [
+              {
+                path: "/user",
+                component: User,
+                children: [
+                  {
+                    path: "posts",
+                    component: UserPost,
+                  },
+                  {
+                    path: "profile",
+                    component: UserProfile,
+                  },
+                ],
+              },
+            ];
+      
+            // 뷰 라우터 정의
+            var router = new VueRouter({
+              routes,
+            });
+      
+            // 뷰 인스턴스에 라우터 추가
+            var app = new Vue({
+              router,
+            }).$mount("#app");
+          </script>
+        </body>
+      </html>
+      
+      ```
+    
+      - 코드 순서
+        - `<div id = "app">`에 `<router-view>`를 등록하여 User 컴포넌트가 뿌려질 영역을 정의한다
+        - User, UserPost, UserProfile 컴포넌트의 내용을 각 객체에 정의한다. 컴포넌트가 전환된 것을 확인할 수 있게 template 속성을 컴포넌트 내용에 추가했다. 여기서 주목할 부분은 User 컴포넌트의 template에 하위 컴포넌트를 표시할 `<router-view>`가  하나 더 있다.
+        - routes에 라우터 정보를 정의한다. 제일 먼저 Path 속성에는 네스티드 라우터를 실행하는 기본 URL을 /user로 설정하고, 상위 컴포넌트는 User 컴포넌트로 지정한다. 그런 다음 Childern 속성에는 URL 값 /user 다음에 올 URL에 따라 표시될 하위 컴포넌트를 정의한다. /user/posts인 경우 UserPost를 표시하고, /user/profile인 경우 UserProfile을 표시하도록 설정한다.
+        - 이제 뷰 라우터를 새로 하나 생성하고 앞에서 정의한 라우터 정보를 담은 객체 routes를 정의한다
+        - 마지막으로 인스턴스를 하나 생성하고 라우터 정보 router를 포함한다. 그리고 app이라는 id를 가진 요소에 인스턴스를 붙여 화면에 나타낸다. 
+    
+      - 네임드 뷰
+    
+        - 특정 페이지로 이동했을 때 여러 개의 컴포넌트를 동시에 표시하는 라우팅 방식이다. 앞에서 본 네스티드와 달리 네임드 뷰는 여러 개의 컴포넌트를 한 번에 표시한다. 
+    
+        ```html
+        <!DOCTYPE html>
+        <html lang="en">
+          <head>
+            <meta charset="UTF-8" />
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>Document</title>
+          </head>
+          <body>
+            <div id="app">
+              <router-view name="header"></router-view>
+              <router-view></router-view>
+              <router-view name="footer"></router-view>
+            </div>
+            <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+            <script src="https://unpkg.com/vue-router@3.0.1/dist/vue-router.js"></script>
+            <script>
+              // 컴포넌트 내용 정의
+              var Body = { template: "<div>This is Body</div>" };
+              var Header = { template: "<div>This is Body</div>" };
+              var Footer = { template: "<div>This is Body</div>" };
+        
+              //라우터 정의
+              var router = new VueRouter({
+                routes: [
+                  {
+                    past: "/",
+                    default: Body,
+                    header: Header,
+                    footer: Footer,
+                  },
+                ],
+              });
+        
+              //라우터 등록
+              var app = new Vue({
+                router,
+              }).$mount("#app");
+            </script>
+          </body>
+        </html>
+        
+        ```
+    
+        - 네임드 뷰 실행 순서
+          - 먼저 `<div>`  태그 안에 `<router-view>`를 3개 추가하고 name 속성을 추가한다 여기서 name 속성은 아래 components 속성에 정의하는 컴포넌트와 매칭하기 위한 속성이다. Header 컴포넌트는 header, Footer 컴포넌트는 footer를 각각 name 속성에 값으로 지정한다. 그리고 name 속성이 없는 두 번째 `<router-view>`는 default로 표시될 컴포넌트
+          - 이제 `<script>`로 넘어가서 Body, Header, Footer 컴포넌트의 내용이 담길 객체를 선언한다. 각 컴포넌트 내용에는 컴포넌트 영역이 구분될 수 있게 간단한 template 속성을 추가한다
+          - 그리고 앞의 네스티드와 다르게 이번엔 라우터를 하나 생성하고 라우터 정보를 바로 그 안에 정의한다.
+          - URL 기본값인 '/'을 지정한다
+          - components는 앞에서 `<router-view>`에 정의한 name 속성에 따라 표시될 컴포넌트를 정의하는 속성이다.
+          - 마지막 인스턴스 생성
+        - name 속성에 사용한 값은 예약어가 아니라 사용자가 임의로 정의할 수 있는 값이다. 이름 바꿔도 동일하게 동작한다. 예외적으로 name 속성을 지정하지 않았을 때의 기본 컴포넌트는 default로 접근한다.
+
+​								
+
+​					
+
+#### 뷰 HTTP 통신
+
+- HTTP(hypertext transfer protocol)는 **브라우저와 서버 간에 데이터를 주고받는 통신 프로토콜**이다.
+
+- ajax
+
+  - 서버에서 받아온 데이터를 표시할 때 화면 전체를 갱신하지 않고도 화면 전체를 갱신하지 않고도 화면의 일부분만 변경할 수 있게 하는 자바스크립트 기법이다.
+  -  뷰 리소스 - 뷰 프레임워크 필수 라이브러리, 엑시오스
+  - 뷰 리소스는 2016년 말에 에반이 공식적인 지원을 중단하기로 결정 
+  - 엑시오스는 현재 뷰 커뮤니티에서 가장 많이 사용되는 HTTP 통신 라이브러리이다. 
+  - 엑시오스는 Promise 기반의 API 형식이 다양하게 제공되어 별도의 로직을 구현할 필요 없이 주어진 API만으로도 간편하게 원하는 로직을 구현할 수 있다. 
+    - Promise 기반의 API 형식
+      - Promise란 서버에 데이터를 요청하여 받아오는 동작과 같은 비동기 로직 처리에 유용한 자바스크립트 객체이다.
+      - 자바스크립트는 단일 스레드로 코드를 처리하기 때문에 특정 로직의 처리가 끝날때까지 기다려주지 않는다. 
+      - 따라서 데이터를 요청하고 받아올 때까지 기다렸다가 화면에 나타내는 로직을 실행해야 할 때 주로 Promise를 활용한다.
+  
+- 엑시오스 API 형식
+
+  - `axios.get('URL 주소').then().catch()`
+    - 해당 URL 주소에 대해 HTTP GET 요청을 보낸다. 서버에서 보낸 데이터를 정상적으로 받아오면 then() 안에 정의한 로직이 실행되고 데이터를 받아올 때 오류가 발생하면 catch()에 정의한 로직이 수행된다
+  - `axios.post('URL 주소').then().catch()`
+    - 해당 URL 주소에 대해 HTTP POST 요청을 보낸다. 
+  - Axis({ 옵션 속성 })
+    - HTTP 요청에 대한 자세한 속성들을 직접 정의하여 보낼 수 있다.
+  
+  ```html
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Document</title>
+    </head>
+    <body>
+      <div id="app">
+        <button v-on:click="getData">프레임워크 목록 가져오기</button>
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+      <!--axios cdn-->
+      <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+      <script>
+        new Vue({
+          el: "#app",
+          methods: {
+            getData: function () {
+              axios
+                .get(
+                  "https://raw.githubusercontent.com/joshua1988/doit-vuejs/master/data/demo.json"
+                )
+                .then(function (response) {
+                  console.log(response);
+                });
+            },
+          },
+        });
+      </script>
+    </body>
+  </html>
+  ```
+  
+  
