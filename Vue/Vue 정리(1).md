@@ -745,4 +745,318 @@
   </html>
   ```
   
+
+
+
+#### 뷰 템플릿
+
+- Template 속성에서 정의한 마크업 + 뷰 데이터를 가상 돔 기반의 render() 함수로 변환한다. 변환된 render()함수는 최종적으로 사용자가 볼 수 있게 화면을 그리는 역할을 한다. 그리고 변환 과정에서 뷰의 반응성이 화면에 더해진다. 
+
+- template 속성을 사용한 경우
+
+  ```html
+  <div id = "app"></div>
   
+  <script>
+  	new Vue({
+      el: "#app",
+      data: {
+        message: "Hello vue.js"
+      },
+      template: '<h3>{{message}}<h3>'
+    })
+  </script>
+  ```
+
+  
+
+- 데이터 바인딩
+
+  - HTML 화면 요소를 뷰 인스턴스의 데이터와 연결하는 것을 의미한다. 주요 문법으로는 `{{}}`와 v-bind 속성이 있다.
+
+    - {{ }} - 콧수염 괄호
+
+      - HTML 태그에 연결하는 가장 기본적인 텍스트 삽입 방식 뷰뿐만 아니라 다른 언어나 프레임워크에서도 자주 사용되는 템플릿 문법이다. 
+
+      - 만약 뷰 데이터가 변경되어도 값을 바꾸고 싶지 않다면 오른쪽과 같이 v-once 속성을 사용한다.
+
+        ```html
+        <div id="app" v-once>
+          {{ message }}
+        </div>
+        ```
+
+    - v-bind
+
+      - v-bind는 아이디, 클래스, 스타일 등의 HTML 속성 값에 뷰 데이터 값을 연결할 때 사용하는 데이터 연결 방식이다. 
+
+      ```html
+      <div id="app">
+        <p v-bind:id="idA">아이디 바인딩</p>
+        <p v-bind:class="classA">클래스 바인딩</p>
+        <p v-bind:style="styleA">스타일 바인딩</p>
+      </div>
+      
+      <script>
+      	new Vue({
+          el: "#app",
+          data: {
+            idA: 10,
+            classA: 'container'
+            styleA: 'color: blue'
+          }
+        });
+      </script>
+      ```
+
+    - 자바스크립트 표현식에서 주의할 점
+    
+      ```html
+      <div id="app">
+        {{ var a = 10; }} <!-- X, 선언문은 사용 불가능 -->
+        {{ if (true) {return 100} }} <!-- X, 분기 구문은 사용 불가능 -->
+        {{ true ? 100: 0}} <!-- O, 스크립트에서 computed 속성으로 계산한 후 최종 값만 표현 -->
+        
+        {{ message.split('').reverse().join('')}} <!-- 복잡한 연산은 인스턴스 안에서 수행 -->
+        {{ reversedMessage}} <!--O, 스크립트에서 computed 속성으로 계산한 후 최종 값만 표현 -->
+      </div>
+      
+      <script>
+      	new Vue({
+          el: "#app",
+          data: {
+            message: 'Hello Vue.js'
+          },
+          computed: {
+            reversedMessageL function() {
+         			return this.message.split('').reverse().join('');
+        }
+          }
+        })
+      </script>
+      ```
+    
+      - 자바스크립트 단에서 computed 속성을 이용하여 계산한 후 최종 결과 값만 표시합니다. 뷰에서 이러한 방식을 권하는 이유는 HTML에 최종적으로 표현될 값만 나타내고, 데이터의 기본 연산은 자바스크립 단에서 함으로써 화면단 코드를 훨씬 빠르게 읽을 수 있어 화면의 UI 구조를 쉽게 파악할 수 있다 또 반복적인 연산에 대해서는 미리 계산하여 저장해 놓고, 필요할 때 바로 불러오는 캐싱효과를 얻을 수 있다.
+    
+    - 디렉티브
+    
+      `<a v-if="flag">두잇 Vue.js</a>`
+    
+      - flag 값이 참이면 텍스트가 화면에 보이고, 값이 거짓이면 `<a> ` 전체가 표시되지 않아 텍스트가 화면에서 보이지 안흔ㄴ다. 
+    
+      - 디렉티브는 화면의 요소를 더 쉽게 조작하기 위해 사용하는 기능이다. 뷰의 데이터 값이 변경되었을 때 화면의 요소들이 리액티브하게 반응하여 변경된 데이터값에 따라 갱신된다. 
+    
+      - 주요 디렉티브
+    
+        - v-if
+    
+          - 참, 거짓 여부 에따라 화면에 표시하거나 표시하지 않음
+    
+        - v-for
+    
+          - 지정한 뷰 데이터의 개수만큼 해당 HTML 태그를 반복한다
+    
+        - v-show
+    
+          - v-if와 유사하게 데이터의 진위 여부에 따라 해당 HTML 태그를 화면에 표시하거나 표시하지 않는다. v-if는 해당 태그를 완전히 삭제하지만 v-show는 css효과만 display:none으로 주어 실제 태그는 남아 있고 화면 상으로만 보이지 않는다
+    
+        - v-bind
+    
+          - HTML 태그의 기본 속성과 뷰 데이터 속성을 연결한다
+    
+        - v-on
+    
+          - 화면 요소의 이벤트를 감지하여 처리할 때 사용한다. 예를 들어, v-on:click은 해당 태그의 클릭 이벤트를 감지하여 특정 메서드를 실행할 수 있다
+    
+        - v-model
+    
+          - 폼에서 주로 사용되는 속성이다. 폼에 입력한 값을 뷰 인스턴스의 데이터와 즉시 동기화한다. 화면에 입력된 값을 저장하여 서버에 보내거나 watch와 같은 고급 속성을 이용하여 추가 로직을 수행할 수 있다. `<input>` `<select>`, `<textarea>` 태그에만 사용할 수 있다.
+    
+        - 뷰 역시 화면에서 발생한 이벤트를 처리하기 위해 v-on 디렉티브와 methods 속성을 활용한다. 
+    
+          - v-on 디렉티브로 메서드 호출할 때 인자 값 넘기기
+    
+          ```html
+          <!DOCTYPE html>
+          <html lang="en">
+            <head>
+              <meta charset="UTF-8" />
+              <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+              <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+              <title>Document</title>
+            </head>
+            <body>
+              <div id="app">
+                <a v-if="flag">두잇 Vue.js</a>
+                <ul>
+                  <li v-for="system in systems">{{ system }}</li>
+                </ul>
+                <p v-show="flag">두잇 Vue.js</p>
+                <h5 v-bin:id="uid">뷰 입문서</h5>
+                <button v-on:click="popupAlert">경고 창 버튼</button>
+                <button v-on:click="clickBtn(10)">클릭</button>
+              </div>
+              <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+          
+              <script>
+                new Vue({
+                  el: "#app",
+                  data: {
+                    flag: true,
+                    systems: ["android", "ios", "window"],
+                    uid: 10,
+                  },
+                  methods: {
+                    popupAlert: function () {
+                      return alert("경고 창 표시");
+                    },
+                  },
+                  methods: {
+                    clickBtn: function (num) {
+                      return alert("clicked " + num + " times");
+                    },
+                  },
+                });
+              </script>
+            </body>
+          </html>
+          ```
+    
+        - computed 속성
+    
+          - data 속성 값의 변화에 따라 자동으로 다시 연산한다는 점입니다. computed 속성에서 사용하고 있는 data 속성 값이 변경되면 전체 값을 다시 한번 계산한다.
+          - 동일한 연산을 반복해서 하지 않기 위해 연산의 결과 값을 미리 저장하고 있다가 필요할 때 불러오는 동작이다. 
+    
+        - methods와 computed의 차이
+    
+          - methods 속성 computed 속성의 가장 큰 차이점은 methods 속성은 호출할 때만 해당 로직이 수행되고 ,computed 속성은 대상 데이터의 값이 변경되면 자동적으로 수행된다. 
+    
+        - watch 속성
+    
+          - 데이터 변화를 감지하여 자동으로 특정 로직을 수행한다 computed 속성과 유사하지만 computed 속성은 내장 API를 활용한 간단한 연산 정도로 적합한 반면에, watch 속성은 데이터 호출과 같이 시간이 상대저긍로 더 많이 소모되는 비동기 처리에 적합하다.
+          - 비동기 처리
+            - 자바스크립트 연산에 영향을 주지 못하도록 별도의 영역(실행 컨텍스트)에서 해당 데이터를 요청하고 응답을 기다린다.
+    
+          ```html
+          <!DOCTYPE html>
+          <html lang="en">
+            <head>
+              <meta charset="UTF-8" />
+              <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+              <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+              <title>Document</title>
+            </head>
+            <body>
+              <div id="app">
+                <input v-model="message" />
+              </div>
+              <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+          
+              <script>
+                new Vue({
+                  el: "#app",
+                  data: {
+                    message: "Hello Vue.js",
+                  },
+                  watch: {
+                    message: function (data) {
+                      console.log('message의 값이 바뀐다 : ", data');
+                    },
+                  },
+                });
+              </script>
+            </body>
+          </html>
+          ```
+    
+          
+
+
+
+
+
+#### 뷰 프로젝트 구성 방법
+
+- 싱글 파일 컴포넌트 체계
+
+  - 싱글 파일 컴포넌트 체계 .vue 파일로 프로젝트 구조를 구성하는 방식을 말한다. 확장 .vue 파일 1개는 뷰 애플리케이션을 구성하는 1개의 컴포넌트와 동일하다.
+
+  - .vue 파일 구조
+
+    ```html
+    <template>
+      <!--HTML 태그 내용-->
+      <div>
+        <span>
+        <button>
+          {{message}}
+          </button>
+        </span>
+      </div>
+    </template>
+    
+    <script>
+    export default {
+       // 자바스크립트 내용
+      data: {
+        messageL 'click this button'
+      }
+    }
+    </script>
+    
+    <style>
+    /*css 스타일 내용*/
+      span{
+        font-size: 1.2em;
+      }
+    </style>
+    ```
+
+- 뷰 CLI
+
+  - 앞에서 배운 싱글 파일 컴포넌트 체계를 사용하기 위해서는 .vue 파일을 웹 브라우저가 인식할 수 있는 형태의 파일로 변환해 주는 웹팩이나 브라우저파이와 같은 도구가 필요하다. 
+  
+  - 웹팩은 웹 앱의 자원(HTML, css, 이미지)들을 자바스크립트 모듈로 변환해 하나로 묶어 웹 성능을 향상시켜 주는 자바스크립트 모듈 번들러입니다. 브라우저리 파이도 웹팩과 유사한 성격의 모듈 번들러지만 웹팩과 다르게 웹 자원 압축이나 빌드 자동화 같은 기능이 없다. 
+  
+  - 뷰 CLI 명령어
+  
+    - Vue init webpack
+      - 고급 웹팩 기능을 활용한 프로젝트 구성 방식, 테스팅, 문법 검사 등을 지원
+    - Vue init webpack-simple
+      - 웹팩 최소 기능을 활용한 프로젝트 구성 방식. 빠른 화면 프로토타이핑용
+    - Vue init browserify 
+      - 고급 브라우저리파이 기능을 활용한 프로젝트 구성 방식, 테스팅, 문법 검사 등을 지원 
+    - Vue init browserify-simple
+      - 브라우저리파이 최소 기능을 활용한 프로젝트 구성 방식, 빠른 화면 프로토타이핑용
+    - Vue init simple
+      - 최소 뷰 기능만 들어간 HTML 파일 1개 생성
+    - Vue init pwa
+      - 웹팩 기반의 프로그레시브 웹 기능을 지원하는 뷰 프로젝트 
+  
+  - 템플릿의 내용은 각기 다르지만 크게 2가지는 비슷하다
+  
+    - 웹팩이나 브라우저리파이 같은 모듈 번들러를 프로젝트 자체에 포함하여 바로 사용할 수 있습니다.
+    - .vue 파일을  HTML, CSS, 자바스크립트 파일로 변환해 주기 위한 뷰 로더를 포함하고 있습니다.
+    - 뷰 로더는 웹팩에서 지원하는 라이브러리입니다. 뷰 로더는 싱글 파일 컴포넌트 체계에서 사용하는 .vue 파일의 내용을 브라우저에서 실행 가능한 웹 페이지의 형태로 변환해 준다. 
+  
+    ```js
+    module: {
+      rules: [
+        {
+          //대상 파일 지정
+          test: /\.vue$/,
+          //사용할 로더 지정
+          loader: 'vue-loader',
+          options: {
+            loaders: {
+              
+            }
+          }
+        }
+      ]
+    }
+    ```
+  
+    
+
+​	

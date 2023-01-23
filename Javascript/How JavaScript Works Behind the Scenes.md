@@ -1,3 +1,5 @@
+
+
 ### An High-Level Overview of Javascript
 
 - 저수준 언어(c)는 개발자가 자원들을 수동적으로 관리를 해야한다. 반면 고수준 언어(파이썬, 자바스크립트)는 모든 것들이 자동적으로 일어나니까 걱정하지 않아도 된다. 그래서 쉽게 배울 수 있지만 단점으로는 빠르거나 최적화 할 수 없다.
@@ -347,3 +349,146 @@ const x = first();
 
 - 호이스팅
   - 인터프리터가 변수와 함수의 메모리 공간을 선언 전에 미리 할당하는 것을 의미합니다.
+
+```js
+'use strict';
+
+function calcAge(birthYear) {
+  const age = 2037 - birthYear;
+
+  function printAge() {
+    const output = `${firstName}, You are ${age}, born in ${birthYear}`;
+    console.log(output);
+
+    if (birthYear >= 1981 && birthYear <= 1996) {
+      var millenial = scope;
+      // same block, same block, in according to scope chain, they're looking for current scope.
+      // reassigning outer scope's variable. below console.log(output) value is New output
+      output = 'NEW OUTPUT!';
+      const firstName = 'Steven';
+      const str = `Oh, and you're a millenial, ${firstName}`;
+      console.log(str);
+
+      function add(a, b) {
+        return a + b;
+      }
+      // original output is working if without const the variable is redefined. and printout New output
+      // const output = 'NEW OUTPUT';
+    }
+    // we cannot access block scope
+    // console.log(str)
+    // var is not passed into block scoped it can access in the local scope.
+    console.log(millenial);
+    // we should see add being called if we don't it won't be working
+    // console.log(add(2, 3));
+    console.log(output);
+  }
+  printAge();
+
+  return age;
+}
+
+const firstName = 'Jonas';
+calcAge(1991);
+
+//스코프 체인은 오직 하나의 길만 존재한다.
+//오직 안에서 밖에만 접근할 수 있다
+console.log(age);
+
+//전역 범위에서는 우리는 다른 범위에서 정의한 어떠한 변수도 접근할 수 없다.
+printAge();
+```
+
+
+
+
+
+
+
+#### Variable Environment: Hosting and The TDZ
+
+- 호이스팅은 코드가 실행하기 전 변수선언/함수선언이 해당 스코프의 최상단으로 끌어 올려진 것 같은 현상을 말한다(형식적인 정의). 인터프리터가 변수와 함수의 메모리 공간을 선언 전에 미리 할당한다.
+- 함수/변수가 선언되기 전에 호출되는 것을 호이스팅이라고 한다.
+  - 영어적인 표현에서는 코드들이 선언되기 전에 접근가능하고 사용가능한 변수들의 형태를 만드는 것 + 변수들은 그들의 범위의 최상단으로 이동된다.
+  - 뒤쪽에서 실행하기 전에, 코드는 변수 선언을 위해서 스캔이 되어 있고 그리고 각각의 변수는 새로운 즉 새로운 프로퍼티는 변수환경객체에서 생성된다.
+
+- 자바스크립트는 나중에 선언되는 변수를 미리 접근할 수 있다.
+
+  ```js
+  cosole.log(value); //undefined
+  
+  var value = 'Hello'
+  
+  console.log(value); // Hellow
+  
+  ```
+
+- **JavaScript는 초기화가 아닌 선언만 호이스팅한다** 
+
+- 다음 같은 경우에는 호이스팅이 발생하지 않는다
+
+  ```js
+  show();
+  
+  //에러가 발생하는 이유는 변수 show는 호이스팅 되지만, 함수를 할당(=초기화)하는 것은 호이스팅 되지 않습니다. 따라서 인터프리터는 변수 show를 함수가 아닌 일반변수로 취급하므로 TypeError가 발생한다.
+  var show = function showFunc() {
+    console.log('showFunc() Call');
+  }
+  
+  show();
+  ```
+
+- 변수 할당이 함수 선언보다 우선순위이며, 함수 선언은 변수 선언보다 우선 순위이다.
+
+  ```js
+  // 변수 할당이 함수 선언보다 우선순위다.
+  var msg = 'Hello';
+  
+  function msg() {
+    console.log('msg() Call');
+  }
+  
+  console.log(typeof msg); // string
+  ```
+
+  ```js
+  var msg;
+  
+  function msg() {
+    console.log('msg() Call!');
+  }
+  
+  console.log(typeof msg); //function
+  
+  ```
+
+|                                 | Hoisted | Initial value                         | scope    |
+| ------------------------------- | ------- | ------------------------------------- | -------- |
+| Function declarations           | Yes     | Actual function                       | Block    |
+| var variables                   | Yes     | undefined                             | Function |
+| let and const variables         | No      | `<uninitialized>`, Temporal Dead zone | Block    |
+| Function expressions and arrows |         | depending if using var and let/const  |          |
+
+- Temporal Dead Zone은 우리가 범위의 시작과 변수가 선언된 위치의 변수에 접근할 수 없고
+
+  ```js
+  const myName = 'Jonas';
+  
+  if (myName === 'Jonas') {
+    console.log('Jonas is a ${job}'); // TDZ(job variable)
+    const age = 2037 - 1989; // TDZ(job variable) - ReferenceError: cannot access 'job' before initialization 
+    console.log(age); // TDZ(job variable)
+    const job = 'teacher';
+    console.log(x);
+  }
+  ```
+
+- TDZ가 존재하는 이유는 쉽게 피하고 에러를 잡기 위해서다(선언 전에 변수에 접근하는 것은 잘못된 관례이며 피해야한다.)
+
+- 또 다른 이유는 `const` 변수가 실제로 작동할 수 있게 만들기 위해서다. 우리는 const 변수에 값을 재할당 할 수 없다. 오직 실행되면서 할당해야한다.
+
+- 호이스팅을 사용하는 이유
+
+  - 실제로 선언되기 전에 함수를 사용하기 위해서
+  - var는 실제로 호이스팅 함수의 부산물이다. 
+  - 자바스크립트는 절대 큰 프로그래밍 언어가 될 의도가 없었다.
