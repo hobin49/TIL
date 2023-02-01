@@ -357,7 +357,7 @@ const x = first();
 
 
 
-#### Scoping in Practice (re)
+#### Scoping in Practice
 
 - 호이스팅
   - 인터프리터가 변수와 함수의 메모리 공간을 선언 전에 미리 할당하는 것을 의미합니다.
@@ -373,7 +373,7 @@ function calcAge(birthYear) {
     console.log(output);
 
     if (birthYear >= 1981 && birthYear <= 1996) {
-      var millenial = scope;
+      var millenial = true;
       // same block, same block, in according to scope chain, they're looking for current scope.
       // reassigning outer scope's variable. below console.log(output) value is New output
       output = 'NEW OUTPUT!';
@@ -392,6 +392,7 @@ function calcAge(birthYear) {
     // var is not passed into block scoped it can access in the local scope.
     console.log(millenial);
     // we should see add being called if we don't it won't be working
+    // if문이랑 위에 addfunction 정의한 부분에서만 사용 가능하다.(스트릭 모드 아니면 사용가능)
     // console.log(add(2, 3));
     console.log(output);
   }
@@ -716,7 +717,7 @@ console.log(this.firstName);
 
   
 
-- 일반함수를 호출시 발생하는 문제
+- 일반함수를 호출시 발생하는 문제(function expression)
 
   ```js
   const jonas = {
@@ -781,7 +782,7 @@ console.log(this.firstName);
       console.log(this);
       console.log(2037 - this.year);
   		
-      //arrow function은 this keyword를 부모 스코프에서 사용하고 있다.(상속한다)
+      //arrow function은 this keyword를 부모 스코프에서 사용하고 있다.(상속한다) + const 사용
       //따라서 정상적으로 출력된다.
       const isMillenial = () => {
         console.log(this)

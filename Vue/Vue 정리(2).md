@@ -602,5 +602,147 @@
             },
         ```
     
+      
+      - App 컴포넌트의 addTodo()메서드에 오른쪽 같이 추가한다.
+      
+        - +버튼을 클릭하면 todoInput컴포넌트에서 App 컴포넌트로 신호를 보내 addTodo()메서드 실행
+      
+        ```vue
+        addTodo(todoItem) {
+        	<!--로컬 스토리지 저장-->
+        	localStorage.setItem(todoItem, todoItem);
+        	<!-- App 컴포넌트의 todoItem 데이터 속성에도 추가한다-->
+        	this.todoItems.push(todoItem);
+        }
+        ```
+      
+      - V-for 디렉티브의 반복 대상을 propsdata로 변경한다.
+      
+        ```vue
+        <!--TodoList.vue-->
+        <li v-for="(todoItem, index) in propsdata" :key="todoItem" class="shadow">
+                <i class="checkBtn fa fa-check" aria-hidden="true"></i>
+                {{ todo }}
+                <span class="removeBtn" type="button" @click="removeTodo(todoItem, index)">
+                  <i class="fa fa-trash-o" aria-hidden="true"></i>
+                </span>
+        </li>
+        ```
+      
+        - 기존 TodoList의 데이터 속성 todoItems -> App 컴포넌트의 todoItems 데이터의 개수만큼 목록 아이템을 생성한다.
+      
+      - TodoList에서 불필요한 코드 제거하고(이제 할일 데이터는 App.vue 파일에서 관리한다)
+      
+        ```vue
+         <!--제거-->
+        	data() {
+            return {
+              todoItems: []
+            };
+          },
+        	<!--App.vue로 이동-->
+          created() {
+            if (localStorage.length > 0) {
+              //로컬 스토리지에는 저장된 모든 아이템을 한 번에 불러오는 API는 없기 때문에 반복문으로 아이템을 모두 불러와야 한다.
+              for (var i = 0; i < localStorage.length; i++) {
+                this.todoItems.push(localStorage.key(i));
+              }
+            }
+          },
+        ```
+      
+      - 이벤트 전달을 이용해 clear All 버튼 기틍 개선하기 
+      
+        - 컴포넌트 간 이벤트 전달은 '하위 컴포넌트에서 발생시킨 이벤트를 상위 컴포넌트에서 받아 상위 컴포넌트의 메서드를 동작시키는 것'
+      
+        - 상위 컴포넌트 수정
+      
+          ```vue
+          <TodoFooter v-on:removeAll="clearAll"></TodoFooter>
+          ```
+      
+        - App.vue 파일의 methods에 추가한 clearAll() 메서드
+      
+          ```vue
+          methods: {
+              clearAll() {
+                localStorage.clear();
+                this.todoItems = [];
+              },
+            }
+          ```
+      
+      - 이벤트 전달을 이용해 할 일 삭제 기능 개선하기
+      
+        - TodoLIst 컴포넌트의 각 할 일 아이템을 삭제하는 로직에도 이벤트 전달 방식을 적용합니다.
+      
+        ```vue
+        <TodoList v-bind:propsdata="todoItems" @removeTodo="removeTodo"></TodoList>
+        ```
+      
+        - TodoList.vue의 removeTodo() 메서드
+      
+        ```vue
+        removeTodo(todoItem, index) {
+        	<!-- 할 일의 텍스트와 인덱스를 같이 보낸다-->
+        	this.$emit('removeTOdo', todoItem, index);
+        }
+        ```
+      
+      - > $emit() 는 하위 컴포넌트에서 이벤트를 발생시켜 상위 컴포넌트로 신호를 보낼 때 $emit()을 사용한다. Api의 기본 형식은 `$emit('이벤트 이름')` 이지만 `$emit('이벤트 이름', 인자1, 인자2)`와 같은 형식으로 하위 컴포넌트의 특정 데이터를 전달할 수 있다. 다만 전달받은 인자 값은 상위 컴포넌트에서 참고용으로만 활용하고, 데이터 값은 병경하지 말아야 합니다. 컴포넌트는 각자 고유한 유효 범위를 갖기 때문에 상위 컴포넌트에서 전달받은 인자 값을 갱신하더라도 하위 컴포넌트에는 반영되지 않는다.
+      
+      - 뷰 애니메이션
+      
+        ```vue
+        <template>
+          <section>
+            <transition-group name="list" tag="ul">
+              <!--v-bind:key를 간략하게 표현 목록에 애니메이션을 적용하려면 :key 속성을 꼭 지정한다-->
+              <li v-for="(todoItem, index) in propsdata" :key="todoItem" class="shadow">
+                <i class="checkBtn fa fa-check" aria-hidden="true"></i>
+                {{ todoItem }}
+                <span class="removeBtn" type="button" @click="removeTodo(todoItem, index)">
+                  <i class="fa fa-trash-o" aria-hidden="true"></i>
+                </span>
+              </li>
+            </transition-group>
+          </section>
+        </template>
+        ```
+      
+        > :key 속성은 v-for 디렉티브를 사용할 때 지정하는 게 좋다.
+        >
+        > 뷰는 목록의 특정 아이템이 삭제내거나 추가되었을 때, 돔에서 나머지 아이템의 순서를 다시 조정하지 않고 프레임워크 내부적으로 전체 아이템의 순서를 제어한다. 이렇게 프레임워크에서 목록 아이템의 순서를 제어하는 이유는 브라우저가 돔을 조작하는 데 소요되는 시간들을 최소화하기 위해서다. 
+        >
+        > 예를 들어 목록 아이템이 1000개가 있을 때, 두 번째 목록 아이템을 지우면 나머지 998개의 아이템이 모두 한 번씩 이동을 해야한다. 하지만 뷰 프레임워크에서 순서를 제어하는 경우 두 번째 아이템을 삭제했을 때 나머지 목록 아이템을 움직이지 않고.. 내부적으로 아이템의 순서만 재조정하여 돔 이동을 최소화한다. 따라서 화면을 더 빨리 그릴 수 있다. :key 속성을 사용하면 이런 작업들을 더 효율적으로 할 수 있다.
+      
+        ```vue
+        <style>
+        .list-item {
+          display: inline-block;
+          margin-right: 10px;
+        }
         
+        .list-move {
+          transition: transform 5s;
+        }
+        
+        .list-enter-active,
+        .list-leave-active {
+          transition: all 1s;
+        }
+        
+        .list-enter,
+        .list-leave-to {
+          opacity: 0;
+          <!-- 아래로 이동-->
+          transform: translateY(30px);
+        }
+        </style>
+        ```
+      
+      - 모달 추가 
 
+
+
+​					
