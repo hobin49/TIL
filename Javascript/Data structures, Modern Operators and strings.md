@@ -382,6 +382,90 @@ restaurant.orderPizza && restaurant.orderPizza('mushrooms', 'spinach');
 
 
 
+#### coding-challenge 1
+
+```js
+const game = {
+  team1: 'Boyern Munich',
+  team2: 'Borrussia Dortmund',
+  players: [
+    [
+      'Neuer',
+      'Pavard',
+      'Martinez',
+      'Alaba',
+      'Davies',
+      'Kimmich',
+      'Goretzka',
+      'Coman',
+      'Muller',
+      'Gnarby',
+      'Lewandowski',
+    ],
+    [
+      'Burki',
+      'Schulz',
+      'Hummels',
+      'Akanji',
+      'Hakimi',
+      'Weigl',
+      'Witsel',
+      'Hazard',
+      'Brandt',
+      'Sancho',
+      'Gotze',
+    ],
+ ],
+ score: '4:0',
+ scored: ['Lewandowski', 'Gnarby', 'Lewandowski', 'Hummels'],
+ data: 'Nov 9th, 2037',
+ odds: {
+  team1: 1.33,
+  x: 3.25,
+  team2: 6.5,
+ },
+};
+
+
+// 1. 배열 2개로 나뉘어진다.
+const [players1, players2] = game.players;
+
+// 2. 리스트의 한 명을 뽑고 나머지 배열에 담는다
+const[gk, ...fieldPlayers] = players1;
+
+
+// 3. 모든 플레이어를 담아라(배열 합치기)
+const allPlayers = [...players1, ...players2];
+
+// 4. 배열에 추가하기
+const players1Final = [...players1, 'Thiago', 'Coutinho', 'Perisic'];
+
+// 5. 객체에 값들 순차적으로 뽑아내기
+const {odds: {tema1, x: draw, team2}} = game;
+
+// 6.
+const printGoals = function (...players) {
+  console.log(`${players.length} goals were scored`);
+}
+
+//4 goals were scored
+printGoals('Davies', 'Muller', 'Lewandowski', "Kimmich");
+//2 goals were scored
+printGoals('Davies', 'Muller');
+//4
+printGoals(...game.scored);
+
+// 7 and 연산자 true이면 앤드 다음이 실행된다.
+team1 < team2 && console.log('Team 1 is more likely to win');
+team1 > team2 && console.log('Team 2 is more likely to win');
+```
+
+
+
+
+
+
+
 #### 6. The Nullish Coalescing Operator (??)
 
 ```js
@@ -401,3 +485,128 @@ console.log(guestCorrect);
 
 
 
+#### 7.Logical Assignment Operators
+
+```js
+const res1 = {
+  name: 'Capri',
+  numGuests: 20,
+  
+};
+const res2 = {
+  name: 'La Piazza',
+  owner: 'Giovanni Rossi',
+};
+
+rest1.numGuests = rest1.numGuests || 10;
+rest2.numGuests = rest2.numGuests || 10;
+
+// {name:'Capri', numGuests:20}
+console.log(rest1);
+// {name:'La Piazza', owner:'Giovanni Rossi', numGuests:10}
+console.log(rest2);
+
+// OR assignment operator
+rest1.numGuests ||= 10;
+rest1.numGuests ||= 10;
+
+// nullish assignment operator (null or undefined)
+rest1.numGuests ??= 10;
+rest1.numGuests ??= 10;
+
+// owner: 0
+rest1.owner = rest1.owner && '<ANONYMOUS>';
+// owner: '<ANONYMOUS>'
+rest2.owner = rest2.owner && '<ANONYMOUS>';
+
+// owner set to undefined, 그래서 owner은 출력되지 않는다.
+rest1.owner && '<ANONYMOUS>';
+// owner: '<ANONYMOUS>'
+rest2.owner && '<ANONYMOUS>';
+```
+
+
+
+
+
+#### 8.Looping Arrays: The for-of Loop
+
+```js
+const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+
+//continue와 break를 사용할 수 없다
+for (const item of menu) console.log(item);
+
+
+
+for (const item of menu.entries()) {
+  //[1, item], [2, item]...
+  console.log(item);
+}
+
+for (const [i, el] of menu.entries()){
+  // 1: item, 2: bruschetta, 3: Garlic bread, 4: Pizza
+  console.log(`${item[0] + 1}: ${item[1]}`)
+  // 위에랑 똑같은 결과 값이 나온다.
+  console.log(`${i + 1}: ${el}`)
+}
+```
+
+
+
+#### 9. Enhanced object Literals
+
+```js
+const weekdays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+const hours = {
+    [weekdays[3]]: {
+      open: 12,
+      close: 22,
+    },
+    [weekdays[4]]: {
+      open: 11,
+      close: 23,
+    },
+    [weekdays[5]]: {
+      open: 0,
+      close: 24,
+    },
+  };
+
+
+// 밖에서 선언한 객체를 안에다 쓸 수 있다.
+const restaurant = {
+  // ES6 enhanced object literals
+  hours
+}
+
+// 바뀐 점( function expression)
+// 변경 전
+order: function(startIndex, mainIndex) {
+  return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]]
+}
+
+// 변경 후 (function이 빠졌다.)
+order(startIndex, mainIndex) {
+  return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+}
+
+
+```
+
+
+
+### 10.Optional Chaining
+
+```js
+if (restaurant.openingHours.fri) cosole.log (restaurant.openingHOurs.fri.open)
+
+// OPtional chaning 쓰기 전
+if (restaurant.openingHours && restaurant.openingHours.fri) 
+	cosole.log (restaurant.openingHOurs.fri.open)
+	
+// WITH optional chaning // 앞에 값이 undefined || null 이면 각각 undefined이나 null이 출력된다.
+console.log(restaurant.openingHours.mon?.open);
+// ? 없으면 Uncaught TypeError가 뜬다.
+console.log(restaurant.openingHours?.mon?.open);
+```
