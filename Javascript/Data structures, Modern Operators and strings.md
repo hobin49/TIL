@@ -1,6 +1,6 @@
 #### 1. Destrucuturing Arrays
 
-- destructing 는 ESX(좀 더 디테일하게 내일) 특징이다. 일반적으로 값들을 언팩킹하는 방법 중에 하나다.
+- destructing 는 ESX 특징이다. 일반적으로 값들을 언팩킹하는 방법 중에 하나다.
 
 - 다른 의미로 복잡한 데이터 구조를 작은 데이터 구조로 변환하는 과정이다.
 
@@ -126,10 +126,10 @@ restaurant.orderDelivery({
 
 
 const { name, openingHours, categories} = restaurant;
-//잘 출력 돼
+// 잘 출력 돼
 console.log(name, openingHours, categories)
 
-//서드파티로서 활용 가능하다.
+// 서드파티로서 활용 가능하다.
 const { name: restaurantName, openingHours: hours, categories: tags} = restaurant;
 console.log(restaurantName, hours, tags)
 
@@ -332,7 +332,7 @@ restaurant.orderPizza('mushrooms');
 
 
 
-#### 5.Short Circulating (&& and ||)
+#### 5.Short Circulating (&& and ||)- 단축평가값
 
 ```js
 // 어떤 데이터 타입을 쓰던지, 어떤 데이터 타입을 리턴한다 short-cirulating(=short circuit evaluation)이라고 한다
@@ -599,6 +599,7 @@ order(startIndex, mainIndex) {
 ### 10.Optional Chaining
 
 ```js
+//11
 if (restaurant.openingHours.fri) cosole.log (restaurant.openingHOurs.fri.open)
 
 // OPtional chaning 쓰기 전
@@ -606,7 +607,77 @@ if (restaurant.openingHours && restaurant.openingHours.fri)
 	cosole.log (restaurant.openingHOurs.fri.open)
 	
 // WITH optional chaning // 앞에 값이 undefined || null 이면 각각 undefined이나 null이 출력된다.
+// 만약 mon(월요일)이 존재하면 open property가 읽을 수 있다.
 console.log(restaurant.openingHours.mon?.open);
 // ? 없으면 Uncaught TypeError가 뜬다.
 console.log(restaurant.openingHours?.mon?.open);
+
+// Example
+const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+
+for (const day of days) {
+  // thu, we open at 12, fri, we open at 11, On sat, we open at 0 
+  // 처음에 or 연산자 쓰면 토요일 오픈시간이 0이면 falsy value라서 undefined가 출력된다 
+  // 그래서 nuliish coalescing operator를 사용해서 nullish(null, undefined) 아니면 값이 출력될 수 있게 조치를 취한다.
+  const open = restaurant.openingHours[day]?.open ?? 'closed';
+  console.log(`On ${day}, we open at ${open}`);
+}
+
+
+// Methods
+// ["Focaccia", "Pasta"]
+console.log(restaurant.order?.(0, 1) ?? 'Method does not exist');
+// Method does not exist(nullish coalescing operator('??')) - 앞에 옵셔널 체이닝 파트가 값이 존재하지 않는다. 
+console.log(restaurant.orderRisoto?.(0, 1) ?? 'Method does not exist');
+
+// Arrays
+const users = [
+  {name: 'Jonas', email: 'hello@jonas.io'}
+];
+
+// Jonas
+console.log(users[0]?.name ?? 'User array empty')
+
+const users = []
+// User array empty
+console.log(users[0]?.name ?? 'User array empty')
+
+if(users.length > 0) console.log(users[0].name);
+else console.log('user array empty')
 ```
+
+- 특정값이 존재하지 않으면 `undfined` 를 바로 리턴한다.
+- 옵셔널체이닝을 사용하지 않으면 바로 `uncaught TypeError`을 만든다.
+
+
+
+
+
+#### 11.Looping Objects: Object Keys, Values, and Entries
+
+```js
+// Property NAMES
+const properties = Object.keys(openingHours);
+// ["thu", "fri", "sat"]
+console.log(properties);
+
+// we are open on 3days
+let openStr = `We are open on ${properties.length} days: `
+
+
+for (const day of properties) {
+  //Thu, fri, sat
+  console.log(day);
+  
+  openStr += `${day},`
+}
+// we are open on 3 days: thu, fri, sat
+console.log(openStr)
+
+
+// Property values
+// 0: {open:12, close:22}
+const values = Object.values(openingHours);
+console.log(values)
+```
+
