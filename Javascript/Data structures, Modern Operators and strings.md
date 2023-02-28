@@ -679,5 +679,112 @@ console.log(openStr)
 // 0: {open:12, close:22}
 const values = Object.values(openingHours);
 console.log(values)
+
+// Entire obejct
+// 키와 값을 배열로 return 
+const entries = Object.entries(openingHours);
+
+// each key, value
+for (const x of entries) {
+  console.log(entries);
+  
+}
+// [key, value ]
+for (const [key, {open, close}] of entries) {
+	console.log(`On ${key} we open at ${open} and close at ${close}`)  
+}
+```
+
+
+
+#### coding chanllenge 2
+
+```js
+//1.
+
+for (const [i, player] of game.scored.entries()) {
+  console.log(`Goal ${i + 1}: ${player}`)
+}
+
+
+//2.
+const odds = Object.values(game.odds);
+let a = 0
+for (const odd of Object.values(odds)) {
+  a += odd
+}
+a /= odds.length;
+console.log(a)
+
+//3.
+for (const [team, odd] of Object.entries(game.odds)) {
+  const teamStr = team === 'x' ? 'draw' : `victory $ {game[team]}`
+  console.log(`Odd of victory ${teamStr} ${odd}`)
+}
+
+//4.
+const scorers = {};
+for (const player of game.scored) {
+  scorers[player] ? scorers[player]++ : (scorers[player] = 1);
+}
+console.log(scorers)
+```
+
+
+
+
+
+#### 12.Sets
+
+```javascript
+const ordersSet = new Set(['Pasta', 'Pizza', 'Pizaa', 'Risotto', 'Pasta', 'Pizza'])
+
+// pasta, pizza, risotto
+console.log(ordersSet);
+
+// 3 (array에 있는 length랑 다른 것이다! 몇 개의 구성으로 되어 있는지 세어준다.
+console.log(ordersSet.size);
+
+// true
+console.log(ordersSet.has('Pizza'));
+// false
+console.log(ordersSet.has('Bread'));
+
+ordersSet.add("Garlic Bread");
+ordersSet.add("Garlic Bread");
+//정상 삭제됨
+ordersSet.delete("Risotto");
+//set에 모든 데이터들 비운다.
+ordersSet.clear();
+//Garlic bread 1개만 들어간다.
+console.log(ordersSet)
+//undefined
+console.log(ordersSet[0])
+
+
+// pasta, pizza, garlic Bread 차례대로 출력
+for (const order of ordersSet) console.log(order);
+
+// Example 
+const staff = ["Waiter", "Chef", "waiter", "manager", "chef", "waiter"];
+// set -> array 변환(spread operator) 사용
+const staffUnique = [...new Set(staff)];
+// Waiter, chef, manager
+console.log(staffUnique);
+// 11
+console.log(new Set('Jonasschmedtmann').size);
+
+// "J", "o", "N", "A", "S"
+console.log(new Set("Jonas"));
+
+```
+
+
+
+#### 13.maps
+
+- maps엔
+
+```js
 ```
 
