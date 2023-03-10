@@ -783,8 +783,184 @@ console.log(new Set("Jonas"));
 
 #### 13.maps
 
-- maps엔
+- maps()는 key가 어떤 타입이든지 가질 수 있고 큰 값이어도 된다.
+- 그러나 objects에서는 키는 항상 문자열이다.
 
 ```js
+const rest = new Map();
+rest.set('name', 'Classico Italiano');
+rest.set(1, "Firenze, Italy")
+// {"name" => "Classico Italiano", 1 => "Firenze, Italy", 2 => "Lisbon, Portugal"}
+console.log(rest.set(2, "Lisbon, Portugal"))
+
+rest
+	.set('categories': ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
+	.set('open', 11)
+	.set('close', 23)
+	.set(true, "We are open :D")
+	.set(false, "we are closed :(");
+
+console.log(rest.get("name"));
+console.log(rest.get(true));
+console.log(rest.get(1));
+
+const time = 21;
+// true, "We are open :D"
+console.log(rest.get(time > rest.get('open') && time < rest.get('close')));
+
+console.log(rest.has('categories'));
+rest.delete(2);
+console.log(rest);
+//7
+console.log(rest.size);
+// 배열 삽입 가능
+rest.set([1,2], "Test")
+
+//undefined ([1, 2])는 힙에서 같은 객체가 아니다. 
+console.log(rest.get([1, 2]));
+
+// 그러나 배열을 먼저 선언하게 되면 value가 정상적으로 출력된다
+const arr = [1, 2];
+rest.set(arr, "Test");
+// Test
+console.log(rest.get(arr));
+
+rest.set(document.querySelector('h1'), 'Heading');
+// key: h1, value: heading
+console.log(rest)
 ```
+
+#### 14.Maps: Iteration
+
+```js
+const question = new Map([
+  ['question', 'What is the best programming language in the world?'],
+  [1, "C"],
+  [2, "Java"],
+  [3, 'JavaScript'],
+  ['correct', 3],
+  [true, 'Correct'],
+  [false, 'Try again!'],
+]);
+
+console.log(question);
+
+// covert object to map
+console.log(Obejct.entries(openingHours));
+const hoursMap = new Map(Object.entries(openingHours))
+
+for (const [key, value] of question) {
+  if (typeof key === 'number') console.log(`Answer ${key}: ${value}`);
+}
+
+const answer = Number(prompt('Your answer'));
+console.log(answwer);
+
+//having Boolean values as keys
+console.log(question.get(question.get('correct') === answer))
+
+// convert map to array 
+console.log([...question]);
+```
+
+
+
+#### 15.Summary: Which Data Structure to Use?
+
+- From the program itself: Data written directly in source code (e.g status messages)
+- From the UI: Data input from the user or data written in DOM (e.g tasks in todo app)
+- From external sources: Data fetched for example from web API (e.g. recipe objects)
+- Array vs Sets
+  - Arrays
+    - when you ordered list of values 
+    - when you need to manipulate data
+  - Sets
+    - Use when you need to work with unique values
+    - Use when high-performance is really important
+      - 찾거나 삭제하는데 일반 배열보다 10배 빠르다.
+    - Uset to remove duplicates from arrays.
+- Objects vs Maps
+  - Objects 
+    - More "traditional" key/value store ("abused" objects )
+    - Easier to write and access values with . and []
+    - Use When you need to function(methods)
+    - Use when working with JSON (can convert to map)
+  - Maps (Es6 전에는 없었다.)
+    - Better performance
+    - Keys can have any data type
+    - Easy to iterate
+    - Easy to compute size
+    - Use when you simply need to map key to values
+    - Use when you need keys that are not strings.
+
+#### 16.code challenge
+
+```js
+const events = [...new Set(gameEvents.values())];
+events.delete(64);
+console.log(
+`An event happened, on average, every ${90 / gameEvents.size} minutes`);
+for (const [min, event] of gameEvents) {
+   const half = min <= 45 ? 'FIRST' : 'SECOND';
+   console.log(`[${half} HALF] ${min}: ${event}`);
+}
+```
+
+
+
+#### 17.Working with Strings
+
+ ```js
+ const airline = "TAP Air Portugal";
+ const plane = "A320";
+ 
+ console.log(plane[0])
+ console.log(plane[1])
+ console.log(plane[2])
+ // 'B'
+ console.log('B737'[0])
+ // 4
+ console.log('B737'.length)
+ 
+ // 6
+ console.log(airline.indexOf('r'));
+ // 10
+ console.log(airline.lastIndexOf('r'))
+ //-1
+ console.log(airline.indexOf('Portugal'))
+ 
+ //Air Portugal
+ console.log(airline.slice(4));
+ 
+ // 7전에 슬라이스를 멈춘다.
+ console.log(airline.slice(4, 7));
+ 
+ // TAP
+ console.log(airline.slice(0, airline.indexOf(' ')));
+ 
+ // Portugal
+ console.log(airline.slice(airline.lastIndexOf(' ') + 1));
+ 
+ // al
+ console.log(airline.slice(-2))
+ //AP Air Portuga
+ console.log(airline.slice(1, -1))
+ 
+ const checkMiddleSeat = function(seat) {
+   const s = seat.slice(-1);
+   if (s === 'B' || s === "E") console.log('You got the middle seat');
+   else console.log('You got luchky')
+ } 
+ 
+ checkMiddleSeat('11B');
+ checkMiddleSeat('23C');
+ checkMiddleSeat('3E')
+ 
+ //object
+ console.log(new String('jonas'))
+ // string
+ console.log(new String('jonas').slice(1));
+ ```
+
+
 

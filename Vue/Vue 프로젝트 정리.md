@@ -308,3 +308,221 @@
     - input placeholder의 위치를 조정하는 법
   
       `text-indent`를 사용해서 들여쓰기를 사용하면 된다.
+
+
+
+- 3/2 오류 정리
+
+  - 버튼 클릭 시 해당 라우터 경로로 이동하기 
+
+    ```vue
+    <template>
+    	<div class="dropbox">
+          <button class="btn-more" @click="pageLink">더보기</button>
+       </div>
+    </template>
+    <script>
+    export default {
+      methods : {
+        pageLink() {
+          this.$router.push( { path: "messagebox"})
+        }
+      }
+    }
+    </script>
+    ```
+
+- 3/8 오류 정리
+
+  - 추가 버튼 누를 시 새로운 텍스트와 값을 보여주기
+
+    ```vue
+    <template>
+    	<div>
+        <button class="plus-btn" @click="changeName()">
+           <img :src="require(`@/assets/plus.png`)" class="plus" />
+        </button>
+      </div>
+    </template>
+    <script>
+    changeName() {
+         this.content = "";
+         this.title = this.mbti;
+         this.isShow = true;
+       },
+    </script>
+    ```
+
+  - 값을 삭제하기
+
+    ```vue
+    <template>
+    	<div class="mbti-cancel">
+          <h3 class="mbti-title">{{ title }}</h3>
+         	<button v-show="isShow" class="btn-cancel" @click="remove()">
+           <img :src="require(`@/assets/close.png`)" class="close" />
+         </button>
+      </div>
+    </template>
+    <script>
+    	remove() {
+          if (confirm("삭제하시겠습니까?")) {
+            for (let i in this.mbti_complete) {
+              if (this.mbti_complete[i].id === this.mbti) {
+                this.mbti_complete.splice(i, 1);
+                break;
+              }
+            }
+            localStorage.setItem("memos", JSON.stringify(this.memos));
+         }
+       },
+    </script>
+    ```
+    
+    
+
+- 3/9 오류 정리
+
+  - 첫 번째 문제
+
+    - 글쓰기를 할 때 똑같은 중복 mbti를 임시저장 할 수 없게 고유의 4개의 서로 다른 mbti만 선택할 수 있게 처리하는 문제가 있었다 
+
+  - 해결
+
+    - 기존에 내가 값을 넣을때 배열을 사용했는데 객체로 바꿔서 처리했다. 그렇게 되면 같은 mbti에 글을 쓰게 되면 value 값에 계속 갱신이 된다. 
+    - 이전 배열을 이용할때는 각각 `,` 를 기준으로 두 개의 값을 넣어주게 처리했었는데 객체를 사용하게 되면 key에는 mbti 값을 그리고 value에는 해당 내용을 한 번에 삽입할 수 있다. 
+
+     
+
+  - 기존 코드
+
+    ```vue
+    <script>
+    export default {
+      methods: {
+        tempSave() {
+          if (this.mbti_complete.length < 4) {
+            this.mbti_complete.push({ id: `${this.mbti}`, content: this.content });
+          } else {
+            alert("4개 이상 만들 수 없습니다");
+          }
+        },
+    
+        remove() {
+          if (confirm("삭제하시겠습니까?")) {
+            for (let i in this.mbti_complete) {
+              if (this.mbti_complete[i].id === this.mbti) {
+                this.mbti_complete.splice(i, 1);
+                break;
+              }
+            }
+            localStorage.setItem("memos", JSON.stringify(this.memos));
+          }
+        },
+      }
+    }
+    </script>
+    ```
+
+  - 새로운 코드
+
+    ```vue
+    <script>
+    export default {
+      methods: {
+         tempSave() {
+          if (Object.keys(this.mbti_complete).length < 4) {
+            this.mbti_complete[this.mbti] = this.content;
+          } else {
+            alert("4개 이상 만들 수 없습니다");
+          }
+        },
+    
+        remove() {
+          if (confirm("삭제하시겠습니까?")) {
+            for (const key in this.mbti_complete) {
+              if (`${key}` === this.mbti) {
+                delete this.mbti_complete[key];
+                this.title = "";
+                this.content = "";
+                this.isShow = false;
+              }
+            }
+          }
+        },
+        call_btn(mbti) {
+          for (const [key, value] of Object.entries(this.mbti_complete)) {
+            console.log(value);
+            if (key === mbti) {
+              this.title = key;
+              this.content = this.mbti_complete[key];
+              this.isShow = true;
+              this.mbti = key;
+            }
+          }
+        },
+      },
+    };
+    </script>
+    ```
+
+  - 두 번째 문제
+
+    - 랜덤 질문을 하고 선택된 mbti들의 답변을 보기 위해서 mbti를 선택했을 때 다른 페이지로 이동할 시에 선택된 값의 데이터를 다른 컴포넌트에서 액세스 할 수 있게 처리
+
+  - 해결
+
+    - Vuex 상태관리를 통해서 다른 컴포넌트에서도 데이터를 액세스 할 수 있게 처리했다.
+
+    ```js
+    <!--store.js-->
+    import { createStore } from "vuex";
+    
+    export default createStore({
+      state: {
+        selectMBTI: "",
+        total_mbti: "",
+      },
+    });
+    ```
+
+    ```vue
+    <!--randomQuestion.vue-->
+    <script>
+    export default {
+      methods: {
+        selectEIOption(option) {
+          this.mbti1 = option;
+          this.totalMbti += this.mbti1;
+          this.$store.state.totalMbti = this.totalMbti;
+        },
+        selectNSOption(option) {
+          this.mbti2 = option;
+          this.totalMbti += this.mbti2;
+          this.$store.state.totalMbti = this.totalMbti;
+        },
+        selectTFOption(option) {
+          this.mbti3 = option;
+          this.totalMbti += this.mbti3;
+          this.$store.state.totalMbti = this.totalMbti;
+        },
+        selectPJOption(option) {
+          this.mbti4 = option;
+          this.totalMbti += this.mbti4;
+          this.$store.state.totalMbti = this.totalMbti;
+        },
+      },
+    }
+    </script>
+    ```
+
+    ```vue
+    <!--randomAnser.vue-->
+    <template>
+    	<div>
+      	<h2>{{ $store.state.totalMbti }}들의 답변</h2>
+      </div>
+    </template>
+    ```
+
+    
