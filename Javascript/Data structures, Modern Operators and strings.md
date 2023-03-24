@@ -348,7 +348,7 @@ console.log(true || 0);
 // null(undefined is a falsy value) 
 console.log(undefined || null);
 
-// Hello
+// Hello([0, undefined, ''] - falsy value)
 console.log(undefined || 0 || '' || 'Hello' || 23 || null);
 
 restaurant.numGeusts = 23;
@@ -779,7 +779,7 @@ console.log(new Set("Jonas"));
 
 ```
 
-
+- 문자열도 set()처리 가능하다. 
 
 #### 13.maps
 
@@ -878,7 +878,7 @@ console.log([...question]);
     - Use when you need to work with unique values
     - Use when high-performance is really important
       - 찾거나 삭제하는데 일반 배열보다 10배 빠르다.
-    - Uset to remove duplicates from arrays.
+    - Used to remove duplicates from arrays.
 - Objects vs Maps
   - Objects 
     - More "traditional" key/value store ("abused" objects )
@@ -911,56 +911,223 @@ for (const [min, event] of gameEvents) {
 #### 17.Working with Strings
 
  ```js
- const airline = "TAP Air Portugal";
- const plane = "A320";
- 
- console.log(plane[0])
- console.log(plane[1])
- console.log(plane[2])
- // 'B'
- console.log('B737'[0])
- // 4
- console.log('B737'.length)
- 
- // 6
- console.log(airline.indexOf('r'));
- // 10
- console.log(airline.lastIndexOf('r'))
- //-1
- console.log(airline.indexOf('Portugal'))
- 
- //Air Portugal
- console.log(airline.slice(4));
- 
- // 7전에 슬라이스를 멈춘다.
- console.log(airline.slice(4, 7));
- 
- // TAP
- console.log(airline.slice(0, airline.indexOf(' ')));
- 
- // Portugal
- console.log(airline.slice(airline.lastIndexOf(' ') + 1));
- 
- // al
- console.log(airline.slice(-2))
- //AP Air Portuga
- console.log(airline.slice(1, -1))
- 
- const checkMiddleSeat = function(seat) {
-   const s = seat.slice(-1);
-   if (s === 'B' || s === "E") console.log('You got the middle seat');
-   else console.log('You got luchky')
- } 
- 
- checkMiddleSeat('11B');
- checkMiddleSeat('23C');
- checkMiddleSeat('3E')
- 
- //object
- console.log(new String('jonas'))
- // string
- console.log(new String('jonas').slice(1));
+const airline = "TAP Air Portugal";
+const plane = "A320";
+
+console.log(plane[0])
+console.log(plane[1])
+console.log(plane[2])
+// 'B'
+console.log('B737'[0])
+// 4
+console.log('B737'.length)
+
+// 6
+console.log(airline.indexOf('r'));
+// 10
+console.log(airline.lastIndexOf('r'))
+//-1
+console.log(airline.indexOf('Portugal'))
+
+//Air Portugal
+console.log(airline.slice(4));
+
+// 7전에 슬라이스를 멈춘다.
+console.log(airline.slice(4, 7));
+
+// TAP
+console.log(airline.slice(0, airline.indexOf(' ')));
+
+// Portugal
+console.log(airline.slice(airline.lastIndexOf(' ') + 1));
+
+// al
+console.log(airline.slice(-2))
+//AP Air Portuga
+console.log(airline.slice(1, -1))
+
+const checkMiddleSeat = function(seat) {
+  const s = seat.slice(-1);
+  if (s === 'B' || s === "E") console.log('You got the middle seat');
+  else console.log('You got luchky')
+} 
+
+checkMiddleSeat('11B');
+checkMiddleSeat('23C');
+checkMiddleSeat('3E')
+
+//object
+console.log(new String('jonas'))
+// string
+console.log(new String('jonas').slice(1));
  ```
 
 
+
+- null은 절대 자연적으로 발생하지 않고 변수 안에 어떤 것이 없다는 것을 확실하게 하기 위해 쓰인다. 값이 없다.
+- Undefined 어떤 변수는 안에 있는데 값이 없다.
+- `==` 와 `===` 의 차이점은 `==`은 동등한 값은 **자동으로 형 변환되어 비교된다** `===` 더 엄격하게 비교하고 형변환을 하지 않는다.
+- `!=`와 `!==` 역시 형 변환이 되냐 되지 않느냐 형 변환 되느냐가 중요한 판단 기준이된다.
+- `*const* title = document.querySelector(".hello h1");`  querySelectorAll을 사용하면 클래스 이름으로 접근할 수 있고 하나의 element만 return한다. **똑같은 element가 있으면 첫 번째 element만 가져온다.** 혹은 `querySelector("h1:first-child")` 로 접근 가능하다.
+- 다 가져오고 싶다면 `querySelectorAll()`을 가져오면 된다.
+
+- 그리고 id를 이용해서도 접근 가능하다. `querySelector("#id")`
+
+- addEventListener함수를 사용할 때 뒤에 함수 호출시 **괄호를 쓰지 말자**
+
+  ```js
+  function handleTitleClick() {
+    console.log("title was clicked!");
+  }
+  
+  
+  title.addEventListener("click", handleTitleClick);
+  ```
+
+  
+
+#### 18.Working With Strings - part2
+
+```js
+const airline = "TAP Air Portugal"
+
+console.log(airline.toLowerCase());
+console.log(airline.toUpperCase());
+
+const passenger = "jOnAS"
+const passengerLower = passenger.toLowerCase();
+
+//Jonas
+const passengerCorrect = passengerLower[0].toUpperCase() + passengerLower.slice(1);
+
+
+// Comparing emails
+const email = 'hello@jonas.io';
+const loginEmail = '	Hello@Jonas.Io \n';
+
+const lowerEmail = loginEmail.toLowerCase();
+//공백제거
+const trimmedEmail  = lowerEmail.trim();
+
+const normalizedEmail = loginEmail.toLowerCase().trim();
+//true 
+console.log(email === normalizedEmail)
+
+console.log(normalizedEmail);
+
+// replacing
+const priceGB = '288, 97£'
+const priceUS = priceGB.replace('£', '$').replace(',','.')
+
+const announceMent = 'All passengers come to barding door 23. Boarding door 23!'
+
+// All passengers come to barding gate 23. Boarding door 23! [뒤에 값은 바뀌지 않아]
+console.log(announcement.replace('door', 'gate'));
+
+// Regex 사용하면 모든 값이 변경
+//All passengers come to barding gate 23. Boarding gate 23! [뒤에 값은 바뀌지 않아]
+console.log(announcement.replace(/door/g, 'gate'));
+
+
+// Booleans
+const plane = 'Airbus A320neo',
+// true
+console.log(plane.includes('A320'));
+// true
+console.log(plane.startsWith('Airb'));
+
+// true
+if (plane.startsWith('Airbus') && plane.endsWith('neo')) {
+  console.log('Part of the NEW Airbus family');
+}
+
+
+//pratice exercise
+const checkBaggage = function (items) {
+  const baggage = items.toLowerCase();
+  if(baggage.includes('Knife') || baggage.includes('gun')) {
+    console.log("You are Not allowed on board");
+  } else {
+    console.log("Welcome aboard")
+  }
+}
+
+console.log('I have a loptop, some Food and a pocket Knife');
+console.log('Socks and camera');
+```
+
+
+
+#### 19.Working With Strings - part 3
+
+```js
+//split and join
+console.log('a+very+nice+string'.split('+'));
+console.log('Jonas Schmedtmann'.split(' '));
+
+const [firstName, lastName] = "Jonas Schmedtmann".split('');
+
+const newName = ['Mr.', firstName, lastName.toUpperCase()].join(' ')
+//Mr. Jonas SCHMEDTMANN
+console.log(newName);
+
+const capitalizeName = function(name) {
+  const names = name.split(' ');
+  const namesUpper = [];
+  
+  for (const n of names) {
+    //namesUpper.push(n[0].toUpperCase() + n.slice(1));
+    namesUpper.push(n.replace(n[0], n[0].toUpperCase()))
+  }
+  console.log(namesUpper.join(' '));
+}
+
+capitalizeName('jessica ann smith davis');
+capitalizeName('jonas schmedtmann');
+
+// padding
+// ++++++Go to gate 23!+++++
+console.log(message.padStart(25, '+').padEnd(35, '+'));
+
+const maskCreditCard = function(number) {
+  const str = number + '';
+  const last = str.slice(-4);
+  return last.padStart(str.length, '*')
+}
+
+console.log(maskCreditCard(64637836));
+
+// Repeat
+const message2 = 'Bad weather... All Departures Delayed'
+console.log(message2.repeat(5));
+```
+
+
+
+#### Coding Challenge #4
+
+```js
+document.querySelector('button').addEventListener('click', function() {
+  const text = document.querySelector('textarea').value;
+  const rows = text.split("\n");
+  for (const [i, row] of rows.entries()) {
+    const [first, second] = row.toLowerCase().trim().split("_");
+    const output = `${first}${second.replace(second[0], second[0].toUpperCase())}`
+    console.log(`${output.padEnd(20)} ${'✅'.repeat(i + 1)}`);
+  }
+});
+```
+
+
+
+#### String Methods Practice
+
+```js
+const getCode = str => str.slice(0, 3).toUpperCase();
+
+for(const flight of flight.split("+")) {
+  const [type, from, to, time]= flight.split(';');
+  const output = `${type.startsWith('_Delayed') ? '🔴' : ''}${type.replaceAll('_', ' ')}from${getCode(from)} to ${getCode(to)} (${time.replace(':', 'h')})`.padStart(36)
+}
+```
 

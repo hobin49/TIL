@@ -525,4 +525,255 @@
     </template>
     ```
 
+- 3/13 오류 정리
+
+  - 문제
+
+    - 첫 화면 페이지에 Swiper-slide를 활용해서 화면을 구성했다. 총 4개의 페이지가 존재하는데 한 개의 시작하기 버튼이 존재하는데 마지막 페이지에서만 버튼 활성화 처리와 라우터 주소로 이동할 수 있게 처리를 하고 싶었다.
+
+  - 해결 
+
+    - 버튼 활성화 처리
+  
+      - 버튼을 활성화하기 위해서 `ref`(변수를 반응성 데이터로 만들어 데이터의 변경을 추적하고 이를 뷰에 반영하기 위한 역할)을 활용했고, `swiper.activeIndex`를 활용해서 현재 페이지의 위치를 받아오게끔 처리했습니다. 
+      - 클래스 바인딩을 통해서 초기에 버튼을 `disabled` 처리를 하고 만약에 현재 페이지가 마지막 페이지라면 disabled를 true처리를 해줬습니다.
+
+       
+
+    - 마지막 페이지에서만 라우터 주소로 이동할 수 있게 
+      - 만약에 현재 페이지가 마지막 페이지라면 `this.$router.push` 를 활용해서 라우터 주소로 이동할 수 있게 처리했다.
+  
+    ```vue
+    <template>
+        <button
+          class="btn btn-start"
+          @click="lastBtn()"
+          :class="{ disabled: isDisabled }"
+        >
+          시작하기
+        </button>
+      </div>
+    </template>
+    <script>
+    // Import Swiper Vue.js components
+    import { Swiper, SwiperSlide } from "swiper/vue";
+    import { Pagination } from "swiper";
+    import "swiper/swiper-bundle.min.css";
+    import { ref } from "vue";
     
+    export default {
+      components: {
+        Swiper,
+        SwiperSlide,
+      },
+      data() {
+        return {
+          currentIndex: 0,
+        };
+      },
+      setup() {
+        let currentSlide = ref(0);
+        let isDisabled = ref(false);
+        const onSwiper = (swiper) => {
+          console.log(swiper);
+        };
+        const onSlideChange = (swiper) => {
+          currentSlide.value = swiper.activeIndex + 1;
+          if (currentSlide.value === 4) {
+            isDisabled.value = true;
+          } else {
+            isDisabled.value = false;
+          }
+        };
+        return {
+          onSwiper,
+          onSlideChange,
+          currentSlide,
+          modules: [Pagination],
+          isDisabled,
+        };
+      },
+      methods: {
+        lastBtn() {
+          if (this.currentSlide === 4) {
+            this.$router.push({ path: "login" });
+          }
+        },
+      },
+    };
+    </script>
+    ```
+  
+- 3/14 오류 정리
+
+  - 큰 문제
+
+    - 그룹 추가페이지에서 하나의 컴포넌트를 재사용해서 그룹 추가 버튼과 그룹 수정 버튼이 하나의 UI에서 이뤄질 수 있게 처리해야 했습니다.	
+
+  - 작은 문제
+
+    - 1.수정 버튼을 누르면 추가 버튼이 동작하는 문제
+  
+    - 해결 방법
+  
+      - 현재 버튼이 추가버튼이라면 추가할 수 있게 로직을 바꿨고 그리고 정보를 담을 때 배열을 사용하지 않고 객체를 사용해서 중복된 key의 값에 다른 값이 저장되는 것을 방지했다. 
+  
+      ```vue
+      <script>
+      export default {
+        data() {};
+        methods: {
+        	registerBtn() {
+            if (this.button === "추가") {
+              this.content = this.groupId;
+              this.groups[this.keys] = this.content;
+              this.keys++;
+            }
+          },
+      	}
+      }
+      </script>
+      ```
+  
+    - 2.수정 버튼을 누르면 값이 수정되지 않는 문제 
+  
+    - 해결 방법
+  
+      - 해당 그룹의 수정버튼을 누르면 그 그룹의 key값을 받아와야 하는데 그러지 못한 상황이었습니다. 따라서 해당 key값을 받아오기 위해서 template에서 해당함수에 argument를 넣어주고 이에 methods에서 파라미터로 key를 받아왔습니다. 
+      - 그리고 객체를 돌면서 해당 객체의 key값과 일치하는 값이 있으면 해당 key값의 value를 불러오게 처리했습니다.
+      - 불러오기까지 됐는데 수정이 되지 않아서 또 다른 함수를 만들어서 현재 입력된 내용이 저장될 수 있게 처리를 했습니다.
+  
+      ```vue
+      <template>
+        <div>
+            <div class="group-name" v-for="(item, value) in groups" :key="value">
+              <span class="name">{{ item }}</span>
+              <div>
+                <div class="add-delete-img">
+                  <button class="fix-btn" @click="fixBtn(value)">
+                    <img :src="require(`@/assets/pencil.png`)" class="pencil" />
+                  </button>
+                  <button class="delete-btn" @click="removeBtn(value)">
+                    <img :src="require(`@/assets/trashcan.png`)" class="trashcan" />
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="btn-control">
+                <button class="add-btn" @click="registerBtn(), saveBtn()">
+                  {{ button }}
+                </button>
+                <button class="cancel-btn" @click="pageLink()">취소</button>
+              </div>
+         </div>
+      </template>
+      <script>
+      	data() {};
+        fixBtn(number) {
+            this.button = "수정";
+            this.category = "그룹 및 수정";
+            this.prevKey = number;
+            for (const [key, value] of Object.entries(this.groups)) {
+              console.log(value);
+              if (key === this.prevKey) {
+                this.groupId = this.groups[key];
+              }
+            }
+          },
+        saveBtn() {
+            if (this.button === "수정") {
+              this.groups[this.prevKey] = this.groupId;
+            }
+          },    
+      </script>
+
+​				
+
+- computed 속성
+
+  - 일반 methods이랑 비슷하지만 Vue 인스턴스 데이터를 기반으로 자동으로 계산되는 의존적인 속성 즉 값이 변경되지 않으면 이전에 값들을 저장해 놓은것을 불러오기 때문에 계산 비용이 큰 작업을 수행할 때 성능 향상에 도움이 되고, 참조하는 데이터가 변경될 때만 속성이 다시 계산 된다. 반면에 methods는 캐싱되지 않고 매번 계속 계산하면서 호출하기 때문에 성능이 저하되는 문제가 발생한다.  
+
+  ```vue
+  <template>
+  	<template>
+    <div>
+      <input v-model="firstName" type="text">
+      <input v-model="lastName" type="text">
+      <p>{{ fullName }}</p>
+    </div>
+  </template>
+  <script>
+  	<script>
+  export default {
+    data() {
+      return {
+        firstName: '',
+        lastName: ''
+      }
+    },
+    computed: {
+      fullName() {
+        return `${this.firstName} ${this.lastName}`
+      }
+    }
+  }
+  </script>
+  ```
+
+  
+
+- watch 속성
+
+  - 데이터의 변화를 감지하고 이에 대한 반응을 정의하는 방법이다. 특정 테이터를 감시하다가 데이터가 변경될 때 콜백 함수(이벤트 핸들러나 비동기 처리 등에서 사용)를 호출하는 기능 watch 속성은 데이터의 변화를 감지하고 이에 대한 적절한 처리를 할 수 있는 강력한 기능이다. 데이터의 유효성 검사, API 호출, 다른 데이터와의 연동 등 다양한 기능을 구현할 수 있다.
+  - 객체 또는 배열의 형태로 정의하며, 객체 형태로 정의할 경우 키는 감시하고자 하는 데이터의 이름이고 값은 콜백 함수이다. 
+
+  ```vue
+  <template>
+    <div>
+      <input v-model="message" type="text">
+      <p>{{ message }}</p>
+    </div>
+  </template>
+  <script>
+  export default {
+    data() {
+      return {
+        message: "Hello, world"
+      }
+    }
+    watch: {
+    	message(newVal, OldVal) {
+        this.messageChanged(newVal, oldVal)
+      }	
+  	},
+    methods {
+      messageChanged(newVal, oldVal) {
+        console.log(`message changed from $[oldVal} to ${newVal}`)
+      }
+    }
+  } 
+  </script>
+  ```
+
+- ref 속성 
+
+  - ref속성으로 지정된 요소는 Vue 인스턴스 내부에서 직접 접근이 가능하다. 필요한 경우에만 사용하자. `$refs`객체를 사용하여 Vue 인스턴스에서 직접 참조할 수 있다.
+
+  ```vue
+  <template>
+    <div>
+      <input type="text" ref="myInput">
+      <button @click="focusInput">입력창에 포커스</button>
+    </div>
+  </template>
+  
+  <script>
+  export default {
+    methods: {
+      focusInput() {
+        this.$refs.myInput.focus()
+      }
+    }
+  }
+  </script>
+  ```
