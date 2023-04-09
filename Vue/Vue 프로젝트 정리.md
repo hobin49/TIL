@@ -777,3 +777,175 @@
   }
   </script>
   ```
+
+
+
+```vue
+import Vue from 'vue';
+import Vuex from 'vuex';
+
+Vue.use(Vuex);
+
+const store = new Vuex.Store({
+  state: {
+    messages: [
+      {
+        name: '익명',
+        content: '오늘은 날씨가 좋네요',
+        date: '2022/02/16 14:36',
+      },
+      {
+        name: '익명',
+        content: '오늘은 날씨가 좋네요',
+        date: '2022/02/16 14:36',
+      },
+    ],
+  },
+  mutations: {
+    deleteMessage(state, index) {
+      if (confirm('삭제하시겠습니까?')) {
+        state.messages.splice(index, 1);
+      }
+    },
+    deleteAllMessages(state) {
+      if (confirm('전체 삭제하시겠습니까?')) {
+        state.messages = [];
+      }
+    },
+  },
+});
+
+export default store;
+
+<template>
+  <div class="title background">
+    <h2>쪽지함</h2>
+    <div class="total_delete_btn">
+      <button class="total_delete" @click="deleteAllMessages()">
+        전체삭제
+      </button>
+    </div>
+    <div class="dropbox" v-for="(message, index) in messages" :key="index">
+      <div class="name-img">
+        <img :src="require(`@/assets/yellowsmile.png`)" class="smile" />
+        <div class="name-content">
+          <div class="name-left">
+            <span class="name">{{ message.name }}</span>
+          </div>
+          <span class="content">{{ message.content }}</span>
+        </div>
+      </div>
+      <div class="date">
+        <span class>{{ message.date }}</span>
+        <button class="cancel" @click="deleteMessage(index)">
+          <img
+            :src="require(`@/assets/cancelorange.png`)"
+            class="cancel-image"
+          />
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { mapState } from 'vuex';
+
+export default {
+  computed: {
+    ...mapState(['messages']),
+  },
+  methods: {
+    deleteMessage(index) {
+      this.$store.commit('deleteMessage', index);
+    },
+    delete
+```
+
+
+
+#### Vuex 정리
+
+- Vuex는 여러 컴포넌트에서 공유되는 상태 데이터를 중앙 집중적으로 관리하고 컴포넌트 간 통신을 쉽게 할 수 있도록 도와준다.
+- State: Vuex의 상태 데이터를 의미한다. 애플리케이션 전체에서 공유되는 데이터를 중앙 집중적으로 관리하기 위해 사용됩니다.
+- Mutaions: 상태 데이터를 변경하는 메서드를 정의합니다. 이 메서드는 동기적으로 상태를 변경한다.
+
+```javascript
+const store = new Vuex.Store({
+  state: {
+    count: 0
+  },
+  mutations: {
+    increment(state) {
+      state.count++
+    },
+    decrement(state) {
+      state.count--
+    },
+    add(state, payload) {
+      state.count += payload
+    }
+  }
+})
+
+// 카운터 컴포넌트에서
+<button @click="increment">증가</button>
+<button @click="decrement">감소</button>
+<button @click="add(10)">10 증가</button>
+
+export default {
+  methods: {
+    increment() {
+      this.$store.commit('increment')
+    },
+    decrement() {
+      this.$store.commit('decrement')
+    },
+    add(value) {
+      this.$store.commit('add', value)
+    }
+  }
+}
+```
+
+- Actions: 비동기 로직을 처리하거나 여러 뮤테이션을 호출하여 상태를 변경하는 메서드를 정의합니다.
+- Getters: 상태 데이터를 가져오거나 연산하여 반환하는 메서드를 정의합니다.
+
+```vue
+<script>
+export default {
+  data() {
+    return {
+      memo: "",
+      newMessage: null,
+    };
+  },
+  methods: {
+    pageLink() {
+      this.$store.commit("updateMemo", this.newMessage);
+      this.$router.push({ path: "messageconfirm" });
+    },
+    updateMemo() {
+      this.newMessage = {
+        content: this.memo,
+        date: new Date().toLocaleDateString(),
+      };
+    },
+  },
+};
+</script>
+```
+
+- 처음에 $store.commit의 위치를 updateMemo() 함수 밑에 처리했는데 그러면 `this.$store.commit`이 text가 변할때마다 객체에 들어가기 때문에 그것을 막기 위해서 보내기 버튼 클릭때 가장 최근 문자열만 반영할 수 있게 처리했다. 
+
+- `$route`와 `$router` 의 차이
+  - route는 현재 활성화된 라우트의 상태를 저장한 객체
+  - router은 웹 어플리케이션 전체에서 딱 하나만 존재
+  - 그렇기에 전반적인 라우터 기능을 관리한다.
+
+
+
+
+
+
+
