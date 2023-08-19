@@ -995,3 +995,137 @@ export default {
 
 
 
+```vue
+<template>
+  <div class="add-group">
+    <p class="category-name2">{{ category }}</p>
+    <input
+      type="text"
+      :placeholder="placeholder"
+      :value="localInputValue"
+      @input="updateInputValue($event.target.value)"
+      class="input-box"
+      maxlength="10"
+    />
+    <br />
+    <div class="btn-control">
+      <button class="add-btn" @click="registerBtn()">
+        {{ button }}
+      </button>
+      <button class="cancel-btn" @click="pageLink()">취소</button>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    category: {
+      type: String,
+      required: true,
+    },
+    placeholder: {
+      type: String,
+      required: true,
+    },
+    button: {
+      type: String,
+      required: true,
+    },
+    inputValue: {
+      type: String,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      localInputValue: this.inputValue,
+    };
+  },
+  watch: {
+    inputValue(newValue) {
+      this.localInputValue = newValue;
+    },
+  },
+  methods: {
+    pageLink() {
+      this.$router.push({ path: "/mbti" });
+    },
+    registerBtn() {
+      if (this.localInputValue === "") {
+        alert("그룹의 이름을 작성해주세요.");
+        return;
+      }
+      this.$emit("register", this.localInputValue);
+      this.localInputValue = "";
+    },
+    updateInputValue(value) {
+      this.localInputValue = value;
+    },
+  },
+};
+</script>
+```
+
+- 그룹 추가에서 inputvalue를 변경했는데 다른 컴포넌트에 전달하려면 watch 속성을 보내자
+
+
+
+
+
+
+
+- 그룹을 삭제하고 새로 추가했는데 groupId를 찾을 수 없다고 뜬다
+
+```js
+import { createStore } from "vuex";
+
+export default createStore({
+  state: {},
+  getters: {},
+  mutations: {
+
+    ADD_GROUP(state, payload) {
+      state.groups[state.keys] = payload;
+      // key 그룹의 길이만큼 조정 
+      state.keys = state.groups.length;
+    },
+
+
+    REMOVE_GROUP(state, index) {
+      if (index > -1 && index < state.groups.length) {
+        state.groups.splice(index, 1);
+        state.keys--;
+      } else {
+        console.warn("Invalid index for removal:", index);
+      }
+    },
+
+  
+  },
+  actions: {},
+  modules: {},
+});
+
+```
+
+
+
+- 하나라도 일치하는 문자열을 찾고 싶으면 some 메서드 활용
+
+```vue
+<script>
+export default {
+  computed: {
+    filterMessages() {
+      return this.messages.filter((item) =>
+        item.name
+          .split("")
+          .some((char) => this.$store.state.totalMbti.includes(char))
+      );
+    },
+  },
+};
+</script>
+```
+
