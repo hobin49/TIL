@@ -659,4 +659,392 @@
   }
   ```
 
+
+
+
+- select
+
+  ```js
+  	let 셀렉터 = $(".form-select");
+  		
+  		
+  	셀렉터.eq(0).on("input", function() {
+      // e.currentTaget.value === this.value 똑같아.
+  		 let value = this.value;
+  		 if (value === "셔츠") {
+  			 셀렉터.eq(1).removeClass("form-hide");
+  		 } else {
+  			 셀렉터.eq(1).addClass("form-hide");
+  		 }
+  	})
+  ```
+
+
+
+- 자바스크립트 html 생성법
+
+  ```js
+  // 방법1
+  let a = document.createElement("p");
+  a.innerHTML = "안녕"
+  document.querySelector("#test").appendChild(a);
   
+  
+  // 방법2
+  let b = "<p>안녕</p>"
+  
+  // beforeend 는 안쪽 맨 밑에 추가하라는 뜻이다.
+  document.querySelector("#test").insertAdjacentHTML("beforeend", b);
+    
+   
+  // 방법3 JQuery
+  let c = "<p>안녕</p>"
+  $("#test").append(c);
+  
+  // 방법 4 innerHTML
+  document.querySelector("#test").innerHTML
+  ```
+
+  
+
+```js
+	셀렉터.eq(0).on("input", function() {
+		 let value = this.value;
+		 if (value === "셔츠") {
+			 셀렉터.eq(1).removeClass("form-hide");
+       //옵션 변경하기
+		 } else  if (value == "바지") {
+			 셀렉터.eq(1).removeClass("form-hide");
+			 // 기존 select 비워주세요.
+			 셀렉터.eq(1).html("");
+			 let 템플릿 = `<option>28</option><option>30</option>`
+			 
+			 $(".form-select").eq(1).append(템플릿);
+		 }
+	})
+```
+
+
+
+- object를 사용할 때 for in 반복문 쓰면 된다. 
+
+- arrow Function을 사용하면 함수 안의 this 뜻이 달라질 수 있다. 
+
+  - function 안에서 쓰면 this가 알맞게 재정의됨.
+
+- Ajax 새로고침 없이 GET, POST 요청하는 기능 
+
+  - 서버와 유저는 문자자료만 주고받을 수 있다.
+
+  - Object, array 보내고 싶으면 따옴표쳐서 문자처럼 만들어야 한다.
+
+  - jQuery 활용
+
+    ```js
+    $.get("https://codingapple1.github.io/price.json")
+    		// $.get은 JSON => object 자동변환 해준다. 
+    	.done(function(data) {
+    	console.log(data.price);
+    })
+    	.fail(function() {
+    	console.log("fail");
+    })
+    ```
+
+  - fetch 활용
+
+    ```js
+    fetch("https://codingapple1.github.io/price.json")
+    	// 받아온 JSON을 object로 바꿔줘서 뽑기 쉽게
+    	.then(res => res.json())
+    	.then(data => {
+    	console.log(data)
+    })
+    	.catch(error => {
+    	console.log(error);
+    })
+    ```
+
+    
+
+- filter
+  - filter()는 원본을 변형하지 않기 때문에 변수에 저장해서 써야한다. 
+- sort
+  - sort() 는 원본 변형을 한다. 그래서 따로 저장하지 않아도 된다.
+
+
+
+- Document Object Model(DOM)
+
+  - 자바스크립트가 어떻게 HTML을 조작할 수 있나? `<p></p>`  자바스크립트는 이런거 해석 못함
+
+  - 그래서 HTML을 자바스크립트가 해석할 수 있는 문법을 변환해놓으면 된다. 
+
+  - 예를 들어 
+
+    ```html
+    <div style="color : red">안녕하세요</div>
+    ```
+
+    - 브라우저는 이런 HTML을 발견하면 object 자료로 바꿔서 보관한다. 
+
+    - 구체적으로 아래처럼 만들어 놓는다
+
+      ```js
+      var document = {
+        div1 : {
+          style : {color : 'red'}
+          innerHTML : '안녕하세요'
+        }
+      }
+      ```
+
+      - 위 변수를 document object라고 부른다. 거기에 Model이라고  한다. 
+
+  - 요약하면 자바스크립트가 HTML에 대한 정보들 (id, class, name, style, innerHTML 등)을 object 자료로 정리한걸 DOM이라고 부른다.
+
+  - 브라우저는 HTML 문서를 위에서 부터 읽으며 DOM을 생성한다.
+
+    - 그래서 자바스크립트 코드가 HTML 보다 아래에 있다. 
+
+    - 자바스크립트 실행을 나중으로 약간 미루는 방법이 있다.
+      - 둘 중에 아무거나 써도 된다. 
+
+    ```js
+    $(document).ready(function(){ 실행할 코드 })
+    document.addEventListener('DOMContentLoaded', function() { 실행할 코드 }) 
+    ```
+
+- load 이벤트 리스너
+
+  - load라는 이벤트리스너를 사용하면 DOM 생성뿐만 아니라 이미지, css, js파일이 로드가 됐는지 체크가능하다.
+  - 이미지 같은게 로드되면 load라는 이벤트가 발생한다.
+
+  ```js
+  셀렉터로찾은이미지.addEventListener('load', function(){
+    //이미지 로드되면 실행할 코드 
+  })
+  ```
+
+  - document에 포함된 모든것들 찾기
+
+  ```js
+  // JQuery 방식
+  $(window).on('load', function(){
+    //document 안의 이미지, js 파일 포함 전부 로드가 되었을 경우 실행할 코드 
+  });
+  
+  // Javascript 방식
+  window.addEventListener('load', function(){
+    //document 안의 이미지, js 파일 포함 전부 로드가 되었을 경우 실행할 코드
+  })
+  ```
+
+  
+
+- localStorage
+
+  - 브라우저 안에 몰래 데이터 저장가능
+
+  - 이름 : 값 형태로 저장가능 (sessionStorage)처럼
+
+  - 5MB 문자/숫자만 저장가능
+
+  - 로컬스토리지 사이트 재접속해도 유지
+
+  - 세션스토리지는 사이트 나가면 자동삭제
+
+  - localStorage.setItem() - 저장하기
+
+  - localStorage.getItem() - 가져오기
+
+  - localStoarge.removeItem() - 삭제하기
+
+  - localStorage에 array,object 저장하려면
+
+    - `JSON.stringify(arr)`
+
+  - localStorage에 array, object 가져올 때는
+
+    - `JSON.parse(arr)`
+
+  - session 스토리지 사용법 똑같음
+
+  - 수정하고 싶으면 
+
+    - 데이터를 꺼내서
+
+      - JSON.parse(배열); 
+
+    - 수정해서 
+
+      - Spread 연산자 활용
+
+        ```js
+        let cart = [...cart, name]
+        ```
+
+    - 다시 넣음
+
+- IndexDB: 구조화된 대용량데이터 저장시
+
+- Cookies: 보통 로그인정보 저장
+
+- cache Storage: html css js 파일 저장하는 곳
+
+
+
+- Position: sticky
+  - 조건부로 fixed
+  - 부모박스 넘어가면 해제
+
+- clear: both
+  - 사진 주위로 글자가 따라 붙지 않게 하기 
+
+
+
+- 스크롤 위치에 따라 변하는 애니메이션
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+  
+  	<div class="card-background">
+	  <div class="card-box">
+		<img src="card1.png">
+	  </div>
+	  <div class="card-box">
+		<img src="card2.png">
+	  </div>
+	  <div class="card-box">
+		<img src="card3.png">
+	  </div>
+	</div>
+	
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+	
+  <script>
+	  //화면이 실행될 때마다 안에 코드를 실행해주세요
+    $(window).scroll(function() {
+		let 높이 = $(window).scrollTop();
+		console.log(높이);
+		
+		// 1. opacity 조정
+		// 700 ~ 1000까지 스크롤바를 내리면,
+		// 첫번째 카드의 opacity를 1~0으로 서서히 변경한다.
+		// 1차 함수 적용 y = ax + b
+		let y1 = (1/-300) * 높이 + (1000/300);
+		let y2 = (1/-300) * 높이 + (1950/300);
+		
+		// 변수가 서서히 변한. 
+		$(".card-box").eq(0).css('opacity', y1);
+		$(".card-box").eq(1).css('opacity', y2);
+		
+		// 2.scale 조정
+		// 700 ~ 1000 까지 스크롤바를 내리면,
+		// 첫번째 카드의 scale를 1 ~ 0.8으로 서서히 변경한다.
+		
+		let s1 = (-2/3000) * 높이 + (44/30);
+		let s2 = (-2/3000) * 높이 + (630/300);
+		
+		if(높이 >= 700 && 높이 <= 1000) {
+			$(".card-box").eq(0).css('transform', `scale(${s1})`);
+		} else {
+			$(".card-box").eq(0).css('transform', `scale(1)`);
+			if (높이 >= 1650 && 높이 <= 1950) {
+				$(".card-box").eq(1).css('transform', `scale(${s2})`);
+			} else {
+				$(".card-box").eq(1).css('transform', `scale(1)`);
+			}
+		}
+		
+	});	
+  </script>	
+</body>
+</html>
+```
+
+
+
+
+
+
+
+- 캐러셀 스와이퍼 기능
+
+  - Mousedown
+
+    - 마우스를 눌렀을때 발생하는 이벤트
+    - 마우스 좌표 구하는 법 `e.clientX`
+
+  - mouseup
+
+    - 마우스를 뗄 때
+
+  - Mousemove
+
+    - 마우스가 움직일 때 
+
+    
+
+- 사진을 drag 못하게 막으려면 
+  - `draggable = "false" ` 처리하면 된다. 
+
+- 캐러셀 스와이퍼 기능
+
+```js
+  <script>
+	  let 시작좌표 = 0;
+	  let flag = false;
+	  
+	  $(".slide-box").eq(0).on("mousedown", function(e) {
+		  // 마우스 좌표 나옴
+		  시작좌표 = e.clientX;
+      // 마우스를 누를때 true로 변환
+		  flag = true;
+	  
+	  })
+	  
+	  $(".slide-box").eq(0).on("mousemove", function(e) {
+      // 마우스를 눌렀을때 좌표 구해서 transform을 이용해서 X만큼 이동
+		  if (flag) {
+			$(".slide-container").css('transform', `translateX(${e.clientX - 시작좌표}px)`)  
+		  }
+	  })
+	  $(".slide-box").eq(0).on("mouseup", function(e){
+      // 마우스를 떼면 false 처리
+	     flag = false;
+		  
+		  if (e.clientX - 시작좌표 < -100) {
+			  // 이동한 거리가 -100px이면 transform으로 왼쪽 이동
+			  $('.slide-container').css("transition", "all 0.5s").css('transform', 'translateX(-100vw)');
+			} else {
+				// transition 줘숴 부드럽게 
+			  $('.slide-container').css("transition", "all 0.5s").css('transform', 'translateX(0vw)');
+			}
+		  // 이동후에 transition 5초후에 사라지게 
+		    setTimeout(()=> {
+				$('.slide-container').css("transition", "none")
+			},5000)
+	  })
+	
+ </script>
+```
+
+- 모바일에서 터치했을 때 넘어가려면
+  - touchstart
+    - 그리고 좌표 구할때 `e.clientX()`가 아닌 `e.touches[0].clientX`가 되어야 한다.;
+    - 터치시작시 발동
+  - touchmove
+    - 터지중일시 발동
+  - touchend
+    - 여기서는 `e.touches[0]`이 아닌 `e.changedTouches[0]`로 해야지 작동한다. 
+    - 터치종료시 발동
