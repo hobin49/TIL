@@ -446,8 +446,6 @@ let 함수 = (a) => {
 
 
 
-
-
 #### 자바스크립트가 문자 다루는 신기한 방법(Template literals)
 
 - 자바스크립트에서 문자를 다룰 때 어려웠던 점을 해결하기 위해 나온 문법이다.
@@ -922,3 +920,83 @@ var 자식 = {};
 - 콘솔창에서 알려주는 prototype chain 
   - 학생1에 부모 유전자를 담고있는 것
   - array, object, function 다 new 키워드로 생성된다. 
+
+- 배열에서 3을 제거하는 함수 만들기
+
+```js
+function Student(이름, 나이){
+  this.name = 이름;
+  this.age = 나이;
+}
+
+Student.prototype.sayHi() {
+	console.log('안녕 나는 ' + this.name + '이야');
+}
+
+var 학생1 = new Student('Kim', 20);
+console.log(학생1.sayHi());
+```
+
+
+
+
+
+
+
+#### ES5 방식으로 쉽게 구현하는 상속기능
+
+- Object.create()
+
+```javascript
+var 부모 = { name : 'Kim', age : 50 };
+var 자식 = Object.create(부모);
+
+// 빈 객체 출력
+console.log(자식)
+// 50(prototype 때문이다.)
+console.log(자식.age);
+// 자식 = { age: 20}
+자식.age = 20;
+
+var 손자 = Object.create(자식);
+// Kim
+console.log(손자.name);
+```
+
+
+
+
+
+#### ES6방식으로 안쉽게 구현하는 상속기능 (Class)
+
+```js
+class 부모 {
+  constructor(파라미터) {
+    this.name = 파라미터;
+    // constructor에 함수 넣어도 되고(1.자식이 직접 함수를 갖고 싶은 경우)
+    this.sayHi = function() {console.log("Hello")}
+  }
+  // 아니면 여기에 함수를 넣어도 된다.
+  // 여기에 추가되는 함수는 
+  // 2.부모.prototype에 추가된다.  
+  sayYes() {
+    console.log("nice")
+  }
+}
+
+var 자식 = new 부모("파라미터");
+// 얘의 부모 prototype(부모유전자)가 출력된다.
+자식.__proto__
+
+// class 안에 함수 추가
+부모.prototype.sayHello = function(){}
+
+```
+
+- Object.getPrototypeOf(자식)
+  - 부모님 prototype을 출력해주세요!
+  - `자식.__proto__` 이거랑 같음
+
+- 객체지향 문법은 왜 쓰나?
+  - Object 여러개 만들어 쓰려고 하는 것이다. 
+
