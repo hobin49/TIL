@@ -1000,3 +1000,78 @@ var 자식 = new 부모("파라미터");
 - 객체지향 문법은 왜 쓰나?
   - Object 여러개 만들어 쓰려고 하는 것이다. 
 
+
+
+
+
+#### 객체지향5. class를 복사하는 extends / super
+
+- extends
+  - 유사한 class를 하나 더 만들고 싶으면?
+  - 정확히 말하면 class를 상속한다. 
+  - class 안에 복사/상속할 값이 많으면 힘들기 때문에 사용한다. 
+
+```js
+class 할아버지 {
+  constructor(name) {
+    this.성 = "Kim";
+    this.이름 = name;
+  }
+}
+
+var 할아버지1 = new 할아버지("만덕");
+
+
+//extends해서 만든 class는 this 그냥 못 쓴다. 
+class 아버지 extends 할아버지 {
+  constructor(name) {
+    super(name);
+    this.나이 = 50;
+  }
+}
+
+
+var 아버지1 = new 아버지('만수');
+```
+
+- extends해서 만든 class는 this 그냥 못 쓴다. 
+- 그래서 대안이 super() 다음에 사용하면 사용 가능하다.
+- **super()는 물려받는 class의 constructor라는 뜻이다.**
+  - **물려받는 class에 파라미터로 값을 받는 게 있다면 똑같이 물려받을 class의 constructor와 super 파라미터에 전달해준다. **
+  - 까먹고 파라미터 안 넣으면 undefined가 나온다. 
+  - 파라미터 2개 이상이어도 잘 맞춰서 넣어주면 된다. 
+- super()의 다른 용도
+
+```js
+class 할아버지 {
+  constructor(name) {
+    this.성 = "Kim";
+    this.이름 = name;
+  }
+  sayHi() {
+    console.log("안녕 저는 할아버지에요");
+  }
+}
+
+class 아버지 extends 할아버지 {
+  constructor(name) {
+    super(name);
+    this.나이 = 50;
+  }
+  
+  sayHi() {
+   console.log("안녕 저는 아버지에요");
+   // 부모 prototype을 상속해주세요
+   super.sayHi();
+  }
+}
+
+var 아버지1 = new 아버지("만수");
+아버지1.sayHi();
+```
+
+- 똑같은 함수가 부모랑 나한테 있다면 가장 가까운 프로토타입에 있는 함수를 출력한다. 
+- super
+  - 부모 class의 constructor를 의미
+  - 부모 class의 prototype을 의미 === `__proto__`
+  - 부모가 가진 함수들을 자유롭게 사용 가능
