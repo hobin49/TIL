@@ -1075,3 +1075,158 @@ var 아버지1 = new 아버지("만수");
   - 부모 class의 constructor를 의미
   - 부모 class의 prototype을 의미 === `__proto__`
   - 부모가 가진 함수들을 자유롭게 사용 가능
+
+
+
+
+
+### getter, setter 왜 쓰나?
+
+- 함수를 만들어  object 데이터를 다루는 이유
+
+  - object 자료가 복잡할 때 이득이다
+    - 코드가 복잡하지 않게 하기 위해
+    - 데이터를 업데이트 수정
+  - object 자료 수정시 편리
+    - 안전장치 기능개발 가능 (잘못 입력해도)
+    - 데이터를 꺼내거나 /수정하거나 그럴 때 편리 실수방지 & 관리가능
+
+  ```js
+  var 사람 = {
+  	 name : "Park",
+  	 age : 30
+  	 nextAge() {
+  	  return this.age + 1 
+    	 }
+       setAge(나이) {
+  		this.age = parsInt(나이);
+  	 }
+    }	
+  	
+  사람.nextAge();
+  사람.setAge(20);
+  ```
+
+  
+
+- 복잡한 소괄호 꼴보기 싫다면 set/get
+
+  - ES5 등장
+  - 예시
+
+  ```react
+  var 사람 = {
+  	 name : "Park",
+  	 age : 30
+  	 get nextAge() {
+  	  return this.age + 1 
+    	 }
+       set setAge(나이) {
+  		this.age = parsInt(나이);
+  	 }
+    }	
+  	
+  // set쓰면 괄호 안 쓰고 더 직관적으로 사용 가능
+  사람.setAge = 20;
+  사람.nextAge
+  ```
+
+  - 데이터 변경은 set, get은 데이터 꺼내쓰는 함수에 
+    - property화 시켜서 소괄호 떼도 된다.
+  - getter/setter은 문법을 좀 더 쉽게 다룬다. 
+    - **get 함수들은 return이 있어야 한다.**
+      - +파라미터도 없어야 한다.
+    - set 함수들은 파라미터가 딱 1개 있어야 한다. 
+
+- class에서 사용하는 get/set
+
+  ```js
+  class 사람 {
+  	constructor() {
+  		 this.name = "Park";
+  		 this.age = 20;
+  	}
+  	get nextAge() {
+  		return this.age + 1
+  	}
+  	set setAge(나이) {
+  		this.age = 나이;
+  	}
+  }
+  	
+  var 사람1 = new 사람();	
+  사람1.setAge = 200
+  사람1.nextAge
+  ```
+
+  
+
+- 데이터 출력/수정 함수를 만들어 쓰는 이유는 **데이터의 무결성** 때문이다. 
+
+- 연습문제
+
+```js
+class 강아지 {
+	 constructor(type, color) {
+		 this.type = type;
+		 this.color = color;
+	 }
+	 한살먹기() {
+		 if (this instanceof Cat) {
+		 this.age ++
+	 }
+	}
+}
+	
+var 강아지1 = new 강아지("말티즈", "white");
+var 강아지2 = new 강아지("진돗개", "brown");
+	
+console.log(강아지1, 강아지2)
+	
+class 고양이 extends 강아지 {
+	 constructor(type, color, age) {
+		super(type, color);
+		this.age = age;
+	}
+}
+  	
+var 고양이1 = new 고양이("코숏", "white", 5);
+var 고양이2 = new 고양이("러시안블루", "brown", 2);
+console.log(고양이1, 고양이2)
+	 
+	
+class Unit {
+	 constructor() {
+		this.공격력 = 5
+		this.체력 = 10
+	}
+	get battlePoint() {
+		 return this.공격력 + this.체력
+	}
+	set heal(stamina) {
+		this.체력 += stamina
+	}
+}
+  	
+var 인스턴스 = new Unit();
+console.log(인스턴스.battlePoint)
+인스턴스.heal = 50;
+  
+  
+var data = {
+	odd: [],
+	even: []
+  // 들어오는 숫자가 많아서 spread operator 쓰면 배열로 묶어준다. 
+	setter함수: function(...숫자들) {
+	if (number % 2 === 0) {
+	  this.even.push(number)
+  } else {
+		this.odd.push(number)
+	}
+	get getNumber() {
+		return [...this.odd, ...this.even].sort((a, b) => a - b)
+	 }
+  }
+}
+```
+
