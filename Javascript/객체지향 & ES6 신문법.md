@@ -1230,3 +1230,87 @@ var data = {
 }
 ```
 
+
+
+
+
+### Destructuring 문법
+
+```js
+// 직관적으로 변수 만들 수 있다.
+var [a, b, c] = [2, 3, 4]
+
+// default 값 지정 가능
+var [a, b, c = 10] = [2, 3]
+
+var { name, age } = { name : "Kim", age: 30};
+
+// 기본값 지정 가능
+var { name, age = 10 } = { name : "Kim", age: 30};
+
+// 이름도 바꿀 수 있다. (default 값도 가능)
+var { name : 나이 } = { name : "Kim"}
+
+// default 값도 넣을 수 있다.
+var { name : 나이  = "Kim"} = {}
+```
+
+- **object는 순서를 보장하지 않기 때문에 반드시 key명과 똑같이 써야한다. **
+
+- 많은 변수를 object에 집어넣고 싶은 경우
+
+```js
+var name = 'Kim';
+var age = 30;
+
+// key와 value가 똑같은 경우
+var obj = { name : name, age : age }
+
+// 이렇게 단순하게 바꿀 수 있음
+var obj = { name, age }
+```
+
+- 함수 파라미터 만들 때 destucturing 문법 사용가능
+
+```js
+function 함수({name, age}) {
+  console.log(name);
+  console.log(age);
+}
+
+함수({ name : "Kim", age : 30 })
+
+// array인 경우
+function 함수([name, age]) {
+  console.log(name);
+  console.log(age);
+}
+
+함수([1, 2])
+```
+
+
+
+- 예제 문제
+
+  - 다음과 같은 Object에서 데이터를 뽑아서 변수를 만들고 싶다
+
+  ```js
+  let 신체정보 = {
+    body: {
+      height: 190,
+      weight: 70
+    },
+    size: ["상의 Large", "바지 30인치"],
+  };
+  
+  let {
+    body: {
+      height,
+      weight,
+    },
+    size: [상의, 하의]
+  } = 신체정보;
+  ```
+
+  
