@@ -1314,3 +1314,120 @@ function 함수([name, age]) {
   ```
 
   
+
+### import/export를 이용한 파일간 모듈식 개발
+
+- 기본적으로 import할 때 다 가져오지 않는다. 
+
+```html
+<script type= "module">
+  // 가져올거 부분은 맘대로 작명 가능
+  import 가져올거 from 경로 
+</script>
+```
+
+- 내가 자바스크립트에서 작성한 코드는 `export default`라는 keyword를 통해서 내보낼 수 있다.
+  - 참고로 `export default`는 파일당 1회 사용 가능하다. 
+
+```js
+var a = 10;
+// export default 내보낼 거
+export default a;
+```
+
+- 여러개를 export 할 수 있는 방법
+  - 1.`export{내보낼것들}` 해야 한다. 
+    - 그리고 import  할때도 `import{가져올 것들} from "경로"` 중괄호 필요하다.
+  - 2.변수 앞에  export를 붙인다. 
+
+```js
+var a = 10;
+var b = 20;
+export c = 30;
+
+export { a, b };
+```
+
+```html
+<script type= "module">
+	import {b} from 경로
+</script>
+```
+
+- export와 export default는 동시 사용 가능하다.
+  - Import 할 때 순서가  1.export default, 2. export이다.
+
+```js
+var a = 10;
+var b = 20;
+var c = 30;
+export {a, b};
+export default c;
+```
+
+```html
+<script type= "module">
+	import c, {a, b} from 경로
+</script>
+```
+
+- 변수명이 마음에 안들면 새로 짓자
+  - `import {변수 as 새변수명} from '경로'`
+
+```html
+<script type="module">
+  import c, {a as 폭발} from 경로
+</script>
+```
+
+- 모든걸 다 import 해오는 `*`  기호
+  - `import * as 변수명들 from "경로"`
+
+```html
+<script type="module">
+  import * as 변수모음 from 'library.js';
+  console.log(변수모음.a);
+</script>
+```
+
+- 프론트엔드 개발에선 호환성 떄문에`<script src="">`을 사용하자
+- 반면에 React, Angular 쓰거나 또는  JS 파일 나눌 때 import/export 사용
+
+
+
+### Stack, Queue를 이용한 웹브라우저 동작원리
+
+```js
+console.log(1+1)
+setTimeout(function(){ console.log(2+2)}, 1000)
+console.log(3+3)
+
+// 출력 순서 2 => 6  => 4
+```
+
+- 웹 브라우저는 자바스크립트 실행해주는 애들이다. 
+- 앱브라우저 내부 
+  - 스택이라는 공간이 존재 
+    - 나의 코드를 한 줄 한 줄 담는다. 
+    - 그러다 변수를 만나면
+      - 힙이라는 공간에 변수가 저장된다. 
+    - 우리 코드 실행해주는 곳이다. (특징 하나밖에 없다. )
+      - 그래서 자바스크립트는  single threaded 언어라고 한다. 
+    - setTimeout 같은 코드는 바로 실행이 불가능하니 대기실로 잠시 이동
+      - 대기실 보내는 코드들(기다림이 필요한 코드)
+        - Ajax 요청 코드들, 이벤트 리스너, SetTimeout 등
+      - 대기실로 보내진 코드들은 이벤트 큐라고 불리우는 곳으로 이동한다. 처리가 완료된 코드들을 줄을 세운다. 
+        - 그리고 stack으로 하나씩 올려보낸다. 
+        - 스택이 바쁘니까 큐 거쳐서 오는데 조건이 Stack이 비어있을 때만 올려보낸다. 
+    - setTimeout은 0초 걸려도 무조건 대기실로 이동한다. 
+- 반복문 안에서 너무 어려운 작업은 자바스크립트로 시키면 큰일난다.
+  - 스택에서 오랫동안 머물면 queue에 있는 요청들이 스택이 비어있지 않아서 실행이 되지 않는다. 
+  - 10초 걸리는 연산이 있을 때 버튼클릭, ajax요청 등 작동이 안 된다. 
+
+- 절대 stack을 바쁘게 만들지말자. (응답 대기 뜸)
+- 큐를 바쁘게 하면 사이트 안 좋음.(이벤트 리스너 많이 부착하지 말자) 
+
+- 자바스크립트는 원래 동기적으로 처리된다. 
+  - 한번에 한줄 순서대로 간다. 
+  - 비동기적으로 처리도 가능
+    - setTimeout, 이벤트리스너, ajax 함수 쓰면된다. 
