@@ -1518,3 +1518,131 @@ function 둘째함수() {
 ```
 
 - 콜백 지옥에 빠짐.. 그니까  Promise 패턴을 
+
+
+
+
+
+### ES6 Promise
+
+- 성공/실패 판정 기계
+
+- then 사용법
+
+```js
+<script>
+var 프로미스 = new Promise();
+
+
+프로미스.then(function() {
+  //프로미스가 성공일 경우 실행할 코드
+}).then(function() {
+  
+})
+</script>
+```
+
+- 콜백함수 만드는 거랑 비슷한데 콜백함수보다는 약간 기능이 많다. 
+
+  
+
+- catch 사용법
+  - 실패할 경우 코드실행
+
+```js
+<script>
+var 프로미스 = new Promise();
+
+프로미스.catch(function() {
+  //프로미스가 실패일 경우 실행할 코드
+})
+</script>
+```
+
+
+
+- 성공/실패 판정 기계 Promise 디자인
+
+```js
+var 프로미스 = new Promise(function(성공, 실패) {
+  성공();
+  실패();
+})
+
+프로미스.then(function() {
+  //프로미스가 성공일 경우 실행할 코드
+}).catch(function() {
+  //프로미스가 실패일 경우
+})
+```
+
+
+
+- Promise 예시 1
+
+```js
+var 프로미스 = new Promise(function(){
+ 	var 어려운 연산 = 1 + 1;
+  성공(어려운연산);
+});
+
+프로미스.then(function(결과) {
+  //프로미스가 성공일 경우 실행할 코드
+  console.log(결과)
+}).catch(function() {
+  //프로미스가 실패일 경우
+ console.log("실패했어요")
+})
+```
+
+- promise의 장점
+  - 콜백 대신 예쁜 코드 
+  - 성공/실패의 경우 맞춰 각각 다른 코드 실행 가능 
+
+
+
+- Promise 예시 2
+
+```js
+var 프로미스 = new Promise(function(){
+ 	// 1초 후에 성공하는 Promise
+  setTimeout(function(){
+    성공();
+  }, 1000);
+});
+
+프로미스.then(function() {
+  //프로미스가 성공일 경우 실행할 코드
+  console.log("성공했어요")
+}).catch(function() {
+  //프로미스가 실패일 경우
+ console.log("실패했어요")
+})
+```
+
+
+
+- Promise의 3가지 상태
+  - 성공하면 `<resolved>`
+  - 판정 대기중이면 `<pending>`
+  - 실패하면 `<rejected>`
+
+
+
+- Promise에 대한 오해 
+  - 동기를 비동기적으로 바꿔주는게 아니다. 
+  - 그냥 콜백함수 디자인의 대체품일 뿐
+- Promise가 적용된 곳들 
+  - JQuery.ajax()
+    - `$.ajax().done(function() {}).fail()`
+  - fetch()
+    -  `fetch().then().catch( )`
+
+
+
+
+
+
+
+
+
