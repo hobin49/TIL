@@ -1642,6 +1642,113 @@ var 프로미스 = new Promise(function(){
 
 
 
+### async/await
+
+- ES8문법
+  - async가 promise의 역할을 대신한다. 함수 실행 후에 Promise 오브젝트가 남는다. 
+
+```js
+async function 더하기() {
+  return 1 + 1;
+}
+
+더하기().then(function(결과) {
+  console.log(결과);
+});
+```
+
+- async는 성공만 가능
+- 강제로 실패는 가능
+
+```js
+async function 더하기() {
+  return Promise.reject("실패임")
+}
+
+더하기().then(function(결과) {
+  console.log(결과)
+})
+```
+
+- 함수 안에서 Promise 쓰기
+
+```js
+async function 더하기() {
+  var 프로미스 = new Promise(function(성공, 실패) {
+    var 힘든연산  = 1 + 1;
+    성공();
+  });
+ 	
+  // 프로미스 해결까지 기다린다. 
+  var 결과 = await 프로미스;
+  console.log(결과);
+}
+더하기();
+```
+
+-   **await은 기다려라는 뜻** === then()과 똑같다.
+  - 프로미스 실패시 에러나고 멈춘다. 
+- try {이걸해보고에러나면} catch { 이걸 실행해주세요 }
+
+```js
+async function 더하기() {
+  var 프로미스 = new Promise(function(성공, 실패) {
+    var 힘든연산  = 1 + 1;
+    성공(힘든연산);
+  });
+  
+  try {
+    var 결과 = await 프로미스
+    // 2가 출력
+    console.log(결과);
+  } catch {
+    console.log("프로미스 연산이 잘 안됩니다.")
+  }
+}
+```
+
+- 프로미스 연산결과는 변수에 저장 가능
+
+
+
+- Q.button을 누르면 성공 판정하는 Promise & 성공시 "성공했어요를" 출력하려면?
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <button id="button">버튼</button>
+</body>	
+<script>
+   async function 더하기() {
+	 	var 프로미스 = new Promise(function(성공, 실패) {
+		document.getElementById("button").addEventListener("click", function() {
+		  성공("성공했어요");
+	  })
+	});
+	
+	try {
+	  var 결과 = await 프로미스
+	  console.log("성공했어요")
+	} catch {
+		console.log("실패했어요")
+	}
+}
+ 
+  </script>  
+</html>
+```
+
+
+
+
+
 
 
 
