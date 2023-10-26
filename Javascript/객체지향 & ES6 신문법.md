@@ -1749,7 +1749,77 @@ async function 더하기() {
 
 
 
+### for in / for of 반복문
 
+- forEach는 Array(전용)
 
+  - 각 배열 요소에 대해 제공된 함수를 한 번씩 실행한다.
 
+  ```js
+  array1.forEach((el) => element * 2)
+  ```
 
+- for in 반복문 (Object 전용)
+
+  - Object에 있던 값을 전부 하나식 꺼내서 사용할 때
+  - enumerable(셀 수 있는)한 것만 반복해준다.
+    - 일반 자료들은 항상 enumerable이 true가 기본값 
+
+  ```js
+  var 오브젝트 = { name: "Kim", age : 30};
+  // 오브젝트.name의 숨겨진 정보 출력
+  // {value: "Kim", writable: true, enumerable: true}
+  Object.getOwnPropertyDescriptor(오브젝트, "name");
+  
+  
+  for (var key in 오브젝트) {
+    // Kim, 30
+    console.log(오브젝트[key])
+  }
+  ```
+
+  - 부모의 prototype도 반복해준다.
+
+  ```js
+  class 부모 {
+    
+  }
+  부모.prototype.name = "Park";
+  
+  var 오브젝트 = new 부모();
+  
+  for (var key in 오브젝트) {
+    // 내가 직접 가지고 있는 값만 반복시키고 싶으면
+    if (오브젝트.hasOwnProperty(key)) {
+     	// Park
+    	console.log(오브젝트[key]) 
+    }
+  }
+  ```
+
+  
+
+- for of 반복문 (iterable 전용) - 신문법
+
+  - Array, 문자, arguments, NodeList, Map, Set에 사용 가능
+
+  ```js
+  var 어레이 = [2,3,4,5];
+  // 변수명 작명
+  for (var key of 오브젝트) {
+    console.log(자료)
+  }
+  
+  // Array Iterator {} => 내부 데이터 출력을 도와주는 함수같은 것 
+  어레이[Symbol.iterator].next();
+  ```
+
+  - NodeList란
+
+  ```js
+  // 이거를 쓰고 난 자리에는 대괄호가 남는다.
+  // [HTML1, HTML2]
+  document.getElementByClassName();
+  ```
+
+  
