@@ -1823,3 +1823,66 @@ async function 더하기() {
   ```
 
   
+
+### Symbol
+
+- 심볼 만드는 법
+
+```js
+var 심볼 = Symbol("설명");
+```
+
+- **심볼은 Object 자료형의 비밀스런 key값**
+  - 비밀스런 데이터를 저장하고 싶으면? 
+  - 쉽게 말해, Object 안에 주석을 다는 것이다. 
+
+```js
+var weight = Symbol("내 시크릿 몸무게임");
+var height = Symbol("내 키")
+
+// Symbol 직접 집어넣어도 된다. 
+var person = { name : "kim", [height] : 160 };
+// 이 정보를 숨기고 싶다면? 
+person.weight = 100;
+// Symbol 사용
+// { Symbol(내 시크릿 몸무게임): 100}
+person[weight] = 100;
+person[height] = 160;
+
+// symbol은 반복문에서 출력이 안 된다 
+for (var key of person) {
+  console.log(person[key])   
+}
+```
+
+- Symbol 특징
+
+  - 설명이 같다고 Symbol이 아니다
+    - Symbol을 만들 때 마다 유니크한 Symbol이 생긴다. 
+
+  ```js
+  var a = Symbol('설명1');
+  var b = Symbol('설명1');
+  // false
+  console.log(a === b);
+  ```
+
+  - 전역 변수같은 전역 Symbol
+    - `Symbol.for()`로 만든다
+    - 같은 설명을 가지고 있는 심볼이 위에 있으면 기존 심볼을 복붙해준다. 
+
+  ```js
+  var a = Symbol.for('설명1');
+  var b = Symbol.for('설명1');
+  console.log(a === b);
+  ```
+
+  - 기본 내장 Symbol들
+
+  ```js
+  var 어레이 = [2, 3, 4];
+  //자바스크립트 array 기본적으로 집어 넣는 기본 Symbol
+  어레이[Symbol.iterator];
+  ```
+
+  
