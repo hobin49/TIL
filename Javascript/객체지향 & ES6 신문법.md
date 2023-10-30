@@ -1886,3 +1886,65 @@ for (var key of person) {
   ```
 
   
+
+
+
+### Map, Set
+
+- Map
+  - key, Value로 저장 가능해
+  - **자료간의 연관성을 표현하기 위해 쓴다.**
+    - 화살표 기호를 사용
+  - **기존의 Object 자료형은 자료 이름으로 글자만 가능하지만 Map 자료형은 다 가능하다**
+
+```js
+var person = new Map();
+// Map {"name" => "Kim"}
+person.set("name", "Kim");
+person.set([1, 2, 3], "Kim");
+
+// 자료 가져오기
+person.get('age')
+// 자료 삭제하기
+person.delete("age")
+// Map에 저장된 데이터의 개수
+person.size
+
+// 반복문 사용하기
+for (var key of person.keys()) {}
+
+// Map 자료형에 직접 자료 집어넣을 떈
+var person = new Map([
+  ["name", "Kim"],
+  ["age", 20]
+]);
+```
+
+
+
+- Set 
+  - 중복자료를 허용하지 않는 Array 비슷한 것 
+
+```js
+var 출석부 = ["john", "tom", "andy", "tom"];
+
+// Set() {"john", "tom", "andy"}
+var 출석부2 = new Set(["john", "tom", "andy", "tom"]);
+
+// Set 자료형에 자료추가하기
+출석부2.add("sally");
+// 자료 제거하기
+출석부2.delete("sally");
+// 자료 있는지 확인
+출석부2.has("sally")
+
+// Set 자료형 <=> Array 자료형
+var 출석부 = new Set(["john", "tom", "andy", "tom"]);
+// 중괄호 제거법 
+출석부 = [...출석부2]
+```
+
+
+
+
+
