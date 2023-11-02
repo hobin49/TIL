@@ -1948,3 +1948,66 @@ var 출석부 = new Set(["john", "tom", "andy", "tom"]);
 
 
 
+### Web Components : 커스텀 HTML 태그 만들기
+
+- JS 문법으로 구현할 수 있는 브라우저 기본 기능임
+- 브라우저 기능을 잘 알아야한다.
+
+```html
+<body>
+  <custom-input></custom-input>
+  <script>
+    class 클래스 extends HTMLElement {
+      // 우리가 만든 태그가 HTML에 장착될 때 실행할 코드 적는 곳이다. 
+      connectedCallback() {
+        // 1. html 생성하는 다른 방법
+        document.createElement("label");
+        this.appendChild(변수)
+        // 2. this => 새로 생성될 <custom-input> 요소 
+        this.innerHTML = `<label>이메일인풋이에요</label><input>`
+      }
+    }
+    // 정의할 커스텀 HTMl
+    customElements.define('custom-input', 클래스);
+  </script>
+</body>
+```
+
+- 커스텀태그의 장점은 html 중복제거, 다른 페이지에서 재활용 가능하다. 
+
+- 파라미터문법같은거 구현 가능
+
+  - 확장성 가능
+  - 함수처럼 활용 가능
+
+  - attribute 변경 감지하는 법 가능
+
+```html
+<body>
+  <custom-input name="이메일"></custom-input>
+	<custom-input name="비번"></custom-input>
+  <script>
+  	class 클래스 extends HTMLElement {
+
+       connectedCallback() {
+          let name = this.getAttribute('name');
+          this.innerHTML = '<label>${name}을 입력하쇼</label><input>'
+       }
+       // attribute 변경 감지하는 법 => name이 바뀌는지 감시
+       static get observedAttributes() {
+         return ["name"]
+       }
+      // 바뀌면 이거 실행해준다.
+       attributeChangedCallback() {
+         console.log(this.getAttribute("name"));
+       }
+    }
+
+    customElements.define("custom-input", 클래스);
+  </script>
+</body>
+```
+
+- 결론 Web Components 기능 쓰면 긴 HTML도 함수처럼 재사용 가능하다
+
+- Lit, stencil 사용하면 된다. 
