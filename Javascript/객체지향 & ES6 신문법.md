@@ -2011,3 +2011,83 @@ var 출석부 = new Set(["john", "tom", "andy", "tom"]);
 - 결론 Web Components 기능 쓰면 긴 HTML도 함수처럼 재사용 가능하다
 
 - Lit, stencil 사용하면 된다. 
+
+
+
+### shadow DOM과 template으로 HTML 모듈화하기
+
+```html
+<input type="range">
+```
+
+- 이런거 쓰면 대게 복잡한 레이아웃이 나온다. 
+- 실제로 내부적으로도 여러개의 `<div>`를 이용해서 만들어진 것인데 
+- 확인하고 싶으면 크롬 개발자도구 - 설정 - show user agent shadow DOM 켜기 이런거 체크해놓으면 된다. 
+- 저 코드 안에 `div` 3개가 숨어있다. 이것을 **shadow DOM**이라고 한다.
+
+- Shadow DOM 만드는법
+
+```html
+<body>
+  <div id="mordor"></div>
+  <script>
+    // shadow Root 만들기
+    document.querySelector("#mordor").attachShadow({mode : "open"})
+    // 안에 내용 넣기
+    document.querySelector("#mordor").shadowRoot.innerHTML = '<p>심연에서 왔도다</p>'
+  </script>
+</body>
+```
+
+
+
+- Web Components + shadow DOM = 완벽한 HTML 모듈
+- 변경 전
+
+```html
+<body>
+  <custom-input name="이메일"></custom-input>
+  <script>
+      class 클래스 extends HTMLElement {
+         connectedCallback() {
+           // 다른 label까지 오염 될 수 있다. 
+           // 그래서 Shadow DOM 쓰면 좋음.(Shadow DOM에 넣은 것들은 외부에 영향을 주지 않는다.)
+            this.innerHTML = `<label>이름을 입력하쇼</label><input>
+      <style> label { color : red } </style>`
+         }
+      }
+      customElements.define("custom-input", 클래스);
+  </script>
+  
+</body>
+```
+
+- 변경 후
+
+```html
+<body>
+  <custom-input name="이메일"></custom-input>
+  <template id="template1">
+   	<label>이메일을 입력하쇼</label><input>
+    <style>label { color : red }</style>
+  </template>
+  <script>
+      class 클래스 extends HTMLElement {
+         connectedCallback() {
+            this.attachShadow({mode: "open"});
+           // 독립적인 공간을 생성했으니 다른 label 태그에 스타일 영향을 주지 않는다.
+           // 그냥 짜면 드러움 
+           // HTML 임시보관함 쓰자.
+            this.shadowRoot.append(template1.content.cloneNode(true));
+           	let el = this.shadowRoot.querySelector("label");
+            el.addEventListener("click", function() {
+              console.log("클릭함")
+            })
+         }
+      }
+      customElements.define("custom-input", 클래스);
+  </script>
+  
+</body>
+```
+
