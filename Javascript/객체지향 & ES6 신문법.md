@@ -2091,3 +2091,52 @@ var 출석부 = new Set(["john", "tom", "andy", "tom"]);
 </body>
 ```
 
+
+
+
+
+
+
+### ?./ ?? 연산자 (optional chaining)
+
+- 여러 문자, 숫자를 한 변수에 저장하려면
+
+````js
+var user = {
+    name : 'kim',
+    age : 20
+}
+
+console.log(user.name);
+// 왼쪽이 비어있으면 오른쪽 안해줌
+console.log(user?.name);
+````
+
+- optional chaining 
+  - 왼쪽이 null, undefined면 점 안 찍어주고 undefined 남겨줌
+
+```js
+var user = {
+    name : 'kim',
+    age : {value : 20};
+}
+
+// 코드 실행 중단되면서 아래 코드가 작동을 안하는거니까 미리 예방하자.
+// optional chaining 사용한다.
+console.log(user.age?.name);
+// 이 경우에는 undefined.value라서 error를 발생시킨다. 
+console.log(user.param.age)
+```
+
+- 간단한 object 자료에서는 데이터 뽑을 때는 optional chaining 사용하지 않아도 된다. 자동으로 undefined가 남기 때문이다.
+
+- ?? nullish coalescing operator
+  - 왼쪽이 null, undefined일 경우 오른쪽 보여달라는 뜻이다
+  - **변수 안에 데이터가 있을 때 데이터가 늦게 도착하면 undefined말고 로딩중을 띄우고 싶을 때 사용하자.**
+
+```js
+var user;
+
+console.log(user ?? '로딩중')
+```
+
